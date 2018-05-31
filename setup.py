@@ -1,11 +1,13 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from setuptools import setup, find_packages
 
 setup(
     name='ospi',
     version='1.0',
     description='This library contains scripts for working with OpenSim files and pinocchio software.',
-    long_description=read('README')
-    keywords='biomechanics OpenSim pinocchio'
+    keywords='biomechanics OpenSim pinocchio',
     url='https://github.com/GaloMALDONADO/ospi/',
     license='GNU General Public License v3.0',
     
@@ -21,4 +23,5 @@ setup(
         'Programming Language :: Python :: 2.7',
     ],
     
+    install_requires=['numpy'],
 )
