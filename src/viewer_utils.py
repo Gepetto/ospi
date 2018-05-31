@@ -214,14 +214,12 @@ class Viewer(object):
             self.placeObject('world/'+self.robot.model.names[i], pose, True)
 
     def displayLowerJointLimits(self, robotName, ff=False):
-        viewer.display(self.robot.model.lowerPositionLimit, robotName)
-        
-        for i in xrange(0, wb_model.model.nbodies):
-            
-        
-        q = self.robot.model.lowerPositionLimit
-        q[:7] = np.zeros((7,1))
-        viewer.display(q, robotName)
+        pass
+        #viewer.display(self.robot.model.lowerPositionLimit, robotName)
+        #for i in xrange(0, wb_model.model.nbodies):
+        #    q = self.robot.model.lowerPositionLimit
+        #    q[:7] = np.zeros((7,1))
+        #    viewer.display(q, robotName)
 
     def getNodeList(self):
         return self.viewer.gui.getNodeList()
