@@ -14,7 +14,7 @@ setup(
     author='Galo MALDONADO',
     author_email='galo_xav@hotmail.com',
 
-    packages=find_packages(exclude=['models','doc']),
+    packages=find_packages(exclude=['models','doc','build']),
     
     classifiers=[
         'Development Status :: 3 - Alpha',
