@@ -15,5 +15,5 @@ If you want to visualize your pinocchio model:
     
 ## Installing
 ```json
-   $ python setup.py --prefix='your install path'
+   $ python setup.py install --prefix='your install path'
 ```
