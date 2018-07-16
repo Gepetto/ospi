@@ -64,6 +64,7 @@ def _readMot(filename, verbose=False):
         if (verbose): print("Reading the colheaders")
         col_headers = f.readline().split()[1:]
 
+        
         # Read time and data from file
         for rows in f:
             data.append(rows.split()[1:])
@@ -71,21 +72,46 @@ def _readMot(filename, verbose=False):
         
         for rows in range (0,len(data[:])):
             for cols in range (0,len(data[0])):
-                if cols in (3,4,5):
-                    # translations
-                    data[rows][cols] = float(data[rows][cols])
-                else:
-                    # store rotations in radians, defualt in opensim is degrees
-                    data[rows][cols] = np.deg2rad(float(data[rows][cols]))
+                data[rows][cols] = float(data[rows][cols])
         
         return np.array(time), np.matrix(data), col_headers
-    
+
+
+
 def parseMotion(model, joint_transformations, filename, representation, verbose=False):
     time, qOsim, col_headers = _readMot(filename, verbose)
+    # store rotations in radians, defualt in opensim is degrees
+    qOsim_radians = np.hstack([np.deg2rad(qOsim[:,:3]), qOsim[:,3:6], np.deg2rad(qOsim[:,6:])])
+    
     q=[]
     for t in xrange(0,time.size):
-        q.append(utils.pinocchioCoordinates(model, joint_transformations, qOsim[t,:].T, representation))
+        q.append(utils.pinocchioCoordinates(model, joint_transformations, qOsim_radians[t,:].T, representation))
     return time, np.matrix(np.array(q).squeeze()), col_headers, qOsim
 
     
+
+def parseForces(filename, verbose=False):
+    '''
+    Returned data has the shape : fse3[nsensors,nframes]
+    input Opensim format must be [Fx, Fy, Fz, Px, Py, Pz, Tx, Ty, Tz]
+    '''
+    osMpi = se3.utils.rotate('z', np.pi/2) * se3.utils.rotate('x', np.pi/2)
+    time, fOsim, colheaders = _readMot(filename, verbose)
+    _, ncols = fOsim.shape
+    counter = 0
+    f = []
+    p = []
+    for i in xrange(0, ncols/9):
+        ftime = []
+        ptime = []
+        for t in xrange(0,time.size):
+            ptime.append(osMpi*fOsim[t,3+counter:6+counter].T)
+            fse3 = se3.Force.Zero()
+            fse3.linear = fOsim[t,0+counter:3+counter].T
+            fse3.angular = fOsim[t,6+counter:9+counter].T
+            ftime.append(fse3)
+        f.append(ftime)
+        p.append(ptime)
+        counter += 9    
+    return time, np.matrix(f), np.array(p).squeeze(), colheaders, fOsim 
 
