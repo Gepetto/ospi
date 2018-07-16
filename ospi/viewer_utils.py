@@ -23,7 +23,7 @@ class Viewer(object):
         self.name = name
         root_node_name = "world/"+robot.name
         #self.filter = FirstOrderLowPassFilter(0.002, self.CAMERA_LOW_PASS_FILTER_CUT_FREQUENCY, mat_zeros(2))
-        print "Adding robot: "+robot.name
+        #print "Adding robot: "+robot.name
         # Launch the gepetto corba server for communicating with the viewer
         #self.initDisplay("world/pinocchio")
         self.initDisplay(root_node_name)
@@ -36,13 +36,13 @@ class Viewer(object):
     def initDisplay(self, viewerRootNodeName):#="world/pinocchio"):
         try:
             self.viewer=gepetto.corbaserver.Client()
-            print "Connected to corba server"
+            print ("Connected to corba server")
             self.viewerRootNodeName = viewerRootNodeName
         except:
             if 'viewer' in self.__dict__:
                 del self.viewer
-            print "!! Error while starting the viewer client. "
-            print "Check whether Gepetto-viewer-corba is properly started"
+            print ("!! Error while starting the viewer client. ")
+            print ("Check whether Gepetto-viewer-corba is properly started")
 
     # Create the scene displaying the robot meshes in gepetto-viewer      
     def loadDisplayModel(self, nodeName, windowName, robot):
@@ -50,8 +50,8 @@ class Viewer(object):
         try:
             # If the window already exists, do not do anything
             self.windowID = self.viewer.gui.getWindowID(windowName)
-            print "Warning: window '"+windowName+"' already created."
-            print "The previously created objects will not be destroyed and do not have to be created again."
+            print ("Warning: window '"+windowName+"' already created.")
+            print ("The previously created objects will not be destroyed and do not have to be created again.")
         except:
             # Otherwise, create the empty window.
             print ("Creating window: "+windowName)
@@ -59,10 +59,10 @@ class Viewer(object):
 
         # Start a new "scene" in this window, named "world/robot.name/", with just a floor.
         if nodeName not in self.viewer.gui.getSceneList():
-            print "creating scene: "+nodeName
+            print ("creating scene: "+nodeName)
             self.viewer.gui.createSceneWithFloor(nodeName)
         else:
-            print nodeName+" already in scene list"
+            print (nodeName+" already in scene list")
 
         self.viewer.gui.addSceneToWindow(nodeName, self.windowID)
 
@@ -77,7 +77,7 @@ class Viewer(object):
                                         robot.visuals[i][2])
             except:
                 visual_name= os.path.split(robot.visuals[i][2])[1]
-                print nodeName+"/"+robot.visuals[i][1]+'_'+visual_name+" already created"
+                print (nodeName+"/"+robot.visuals[i][1]+'_'+visual_name+" already created")
                 #print "Node "+visual_name+" already created"
         # iterate for creating nodes for all joint 
         #for i in range(1,robot.model.nbodies):
@@ -171,7 +171,7 @@ class Viewer(object):
         if(ENABLE_VIEWER):
             self.robots[robot.name] = robot
             nodeName = "world/"+robot.name
-            print "adding robot: "+robot.name
+            print ("adding robot: "+robot.name)
             self.loadDisplayModel(nodeName, "pinocchio", self.robots[robot.name]);
             se3.framesKinematics(self.robots[robot.name].model, 
                                  self.robots[robot.name].data, 
