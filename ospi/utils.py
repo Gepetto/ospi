@@ -79,7 +79,7 @@ def pinocchioCoordinates(model, joint_transformations, dof, representation="quat
             jt_sph = jt[i-1]
             tup = np.nonzero(jt_sph)
             row=tup[0]; col=tup[1];
-            q[qp_idx:qp_idx+4,0] = np.matrix(orderQuat(alg.quaternion_from_matrix(alg.euler_matrix((dof[qo_idx,0])*jt_sph[row[0,0],col[0,0]], dof[qo_idx+1,0]*jt_sph[row[0,1],col[0,1]], dof[qo_idx+2,0]*jt_sph[row[0,2],col[0,2]], 'rxyz')))).T
+            q[qp_idx:qp_idx+4,0] = np.matrix(orderQuat(alg.quaternion_from_matrix(alg.euler_matrix((dof[qo_idx,0])*jt_sph[row[0],col[0]], dof[qo_idx+1,0]*jt_sph[row[1],col[1]], dof[qo_idx+2,0]*jt_sph[row[2],col[2]], 'rxyz')))).T
             qo_idx += 3
             qp_idx += 4
         elif (model.joints[i].shortname() == "JointModelSphericalZYX"):
