@@ -9,9 +9,9 @@ import wrapper as wr
 import motion_parser as mtp
 
 # The path to the model meshes
-mesh_path='/local/gmaldona/devel/Models/data/whole_body/obj'
+mesh_path='models/whole_body/obj'
 # The path to the model and the filename
-filename='/local/gmaldona/devel/Models/data/whole_body/wholebody.osim'
+filename='models/whole_body/wholebody.osim'
 # Create a wrapper specific to the whole-body model 
 # The wrapper parse the OpenSim model and builds pinocchio model and data
 wb_model = wr.Wrapper(filename, mesh_path, name='whole-body_model1')
@@ -19,7 +19,7 @@ wb_model = wr.Wrapper(filename, mesh_path, name='whole-body_model1')
 
 # call the gepetto viewer server
 gvs = subprocess.Popen(["./gepetto-viewer.sh","&"])
-print 'Loading the viewer ...'
+print ('Loading the viewer ...')
 time.sleep(2)
 
 # Init the viewer and add the model to it 
