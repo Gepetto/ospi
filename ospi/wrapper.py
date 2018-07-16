@@ -5,8 +5,8 @@ import numpy as np
 import time
 import os
 from pinocchio.utils import XYZQUATToViewerConfiguration, zero, se3ToXYZQUAT
-from bmtools.algebra import quaternion_from_matrix, euler_matrix
-from bmtools.filters import *
+from ospi.algebra import quaternion_from_matrix, euler_matrix
+
 
 class Wrapper():
     def __init__(self, filename, mesh_path, name='the_model_wrapper'):
@@ -22,7 +22,7 @@ class Wrapper():
         self.q = self.q0
         self.dq = zero(self.model.nv)
         self.ddq = zero(self.model.nv)
-
+        
     @property
     def nq(self):
         return self.model.nq
