@@ -11,13 +11,16 @@ import os
 import model_builder as builder
 import utils
 
+from IPython import embed
+
 def readOsim(filename):
     pymodel = {
         'Bodies':[], 
         'Joints':[], 
         'Visuals':[],
         'Forces':[],
-        'Point':[]
+        'Point':[],
+        'Markers':[]
     }
     tree = xml.parse(filename)
     root = tree.getroot()
@@ -178,6 +181,24 @@ def readOsim(filename):
             points.append(point_data)
         pymodel['Forces'].append([force_data,points])
 
+
+
+    # *********************************************************
+    #                 Get marker set
+    # *********************************************************
+
+    for markers in root.findall('./Model/MarkerSet/objects/Marker'):
+        marker_data = {
+            'marker_name': [],
+            'body':[],
+            'location':[],
+            'fixed':[]
+        }
+        marker_data['marker_name'].append(markers.get('name'))
+        marker_data['body'].append(markers.find('body').text)
+        marker_data['location'].append(markers.find('location').text.split())
+        marker_data['fixed'].append(markers.find('fixed').text)    
+        pymodel['Markers'].append(marker_data)
     
     return pymodel        
 
@@ -240,7 +261,7 @@ def parseModel(filename, mesh_path, verbose=False):
             body_placement, 
             body_name
         )
-    
+        
         scale_factors = osMpi * (np.matrix(pymodel['Visuals'][body][0]['scale_factors'][0], np.float64)).T
         scale_factors = np.asarray(scale_factors.T)[0]
         scale_factors = [scale_factors[0], scale_factors[1], scale_factors[2]]
@@ -253,8 +274,34 @@ def parseModel(filename, mesh_path, verbose=False):
             transform = np.matrix(pymodel['Visuals'][body][1]['transform'][mesh],dtype=np.float64).T
             transform[3:6] =  osMpi * transform[3:6]
             transform[0:3] =  osMpi * transform[0:3]
-            visuals = ms_system.createVisuals(parent, joint_name, filename, scale_factors, transform)
+            ms_system.createVisuals(parent, joint_name, filename, scale_factors, transform)
         if (verbose): print '****'
+
+    # Add markers
+    marker_parent = parent
+    for marker in range(0,len(pymodel['Markers'])):
+        marker_name = pymodel['Markers'][marker]['marker_name'][0]
+        #print marker_name + ":" + str(marker_parent)
+
+        body_name = pymodel['Markers'][marker]['body'][0]
+        body_id = ms_system.model.getBodyId(body_name) #body frame idx in fact 
+        #print body_name + " : " + str(body_id)
+        
+        joint_parent = ms_system.model.frames[body_id].parent
+        joint_name = ms_system.model.names[joint_parent]
+        #print joint_name + " : " + str(joint_parent)
+
+        
+        marker_placement = se3.SE3.Identity() 
+        marker_placement.translation =   osMpi * np.matrix(pymodel['Markers'][marker]['location'][0], dtype = np.float64).T
+        #print marker_placement.translation.T
+        
+        
+        ms_system.buildMarkerSet(marker_name, marker_placement, marker_parent,  joint_name, joint_parent)
+        marker_parent += 1
+        ms_system.createVisuals(marker_parent, marker_name, "markers") 
+
+        #print '-------------'
     
     # create data
     ms_system.createData()

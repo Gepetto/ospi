@@ -13,7 +13,7 @@ class MS:
       self.forces = []
       self.joint_transformations = []
       self.name = name
-      #self.FrameType = se3.FrameType.OP_FRAME
+      self.FrameType = se3.FrameType.OP_FRAME
    
    def buildModel(self, parent, joint_model, joint_placement, joint_name,
                             joint_id, body_inertia, body_placement, body_name):
@@ -33,14 +33,23 @@ class MS:
       '''
       #self.model.addFrame(joint_name, parent, idx_f, body_placement, self.FrameType)
       #return self.model
+
+      
+   def buildMarkerSet(self, marker_name, marker_placement, marker_parent, joint_name, joint_id):
+      body_inertia = se3.Inertia.Zero()
+      self.model.appendBodyToJoint(joint_id, body_inertia, marker_placement)
+      self.model.addBodyFrame(marker_name, joint_id, marker_placement, marker_parent)
+
       
    def createVisuals(self, parent, joint_name, filename, scale_factors=None, transform=None):
       self.visuals.append([parent, joint_name, filename, scale_factors, transform ])
 
+      
    def createForces(self,force_name,force_type,parent,points):
       #TODO
       self.forces.append([force_name,force_type,parent,points])
 
+      
    def createConstraints(self, qRoM):
       self.model.lowerPositionLimit = utils.pinocchioCoordinates(self.model, self.joint_transformations, qRoM[:,0])
       self.model.upperPositionLimit = utils.pinocchioCoordinates(self.model, self.joint_transformations, qRoM[:,1])

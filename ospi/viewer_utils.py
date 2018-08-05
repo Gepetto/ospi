@@ -69,15 +69,20 @@ class Viewer(object):
         self.viewer.gui.createGroup(nodeName)        
         # iterate over visuals and create the meshes in the viewer 
         for i in range (1,len(robot.visuals)):
-            try:
-                visual_name= os.path.split(robot.visuals[i][2])[1]
-                self.viewer.gui.addMesh(nodeName+'/'+
-                                        robot.visuals[i][1]+'_'+
-                                        visual_name, 
-                                        robot.visuals[i][2])
-            except:
-                visual_name= os.path.split(robot.visuals[i][2])[1]
-                print (nodeName+"/"+robot.visuals[i][1]+'_'+visual_name+" already created")
+            if robot.visuals[i][2] != 'markers':
+                try:
+                    visual_name= os.path.split(robot.visuals[i][2])[1]
+                    self.viewer.gui.addMesh(nodeName+'/'+
+                                            robot.visuals[i][1]+'_'+
+                                            visual_name, 
+                                            robot.visuals[i][2])
+                except:
+                    visual_name= os.path.split(robot.visuals[i][2])[1]
+                    print (nodeName+"/"+robot.visuals[i][1]+'_'+visual_name+" already created")
+            else:
+                self.viewer.gui.addSphere(nodeName+'/'+robot.visuals[i][1], 0.01, [1., 0., 1., .5])
+                #self.viewer.gui.addXYZaxis(nodeName+'/'+robot.visuals[i][1], [1., 0., 1., .5], 0.01, 0.0001)
+                    
                 #print "Node "+visual_name+" already created"
         # iterate for creating nodes for all joint 
         #for i in range(1,robot.model.nbodies):
@@ -101,8 +106,11 @@ class Viewer(object):
         self.viewer.gui.applyConfiguration(objName,pinocchioConf)
         if refresh: self.viewer.gui.refresh()
 
-    def display(self, q, robotName, com=True, joint_frames=False, osimref=True):#updateKinematics=True):
+    def display(self, q, robotName, com=True, joint_frames=True, osimref=True):#updateKinematics=True):
         robot = self.robots[robotName]
+        se3.forwardKinematics(robot.model, robot.data, q)
+        se3.framesKinematics(robot.model, robot.data, q)
+        
         oMp = se3.SE3.Identity().rotation
         if osimref is True:
             oMp = se3.utils.rotate('z',np.pi/2) * se3.utils.rotate('x',np.pi/2)
@@ -117,39 +125,59 @@ class Viewer(object):
         #display skelette visuals
         for i in range (1,len(robot.visuals)):
             # get the parent joint
-            idx = robot.model.getJointId(robot.visuals[i][1])
+            #idx = robot.model.getJointId(robot.visuals[i][1])
+            idx = robot.model.getFrameId(robot.visuals[i][1])
             pose = se3.SE3.Identity()
-            if osimref is True:
-                # convert bones pose
-                pose.translation =  (robot.data.oMi[idx].translation + 
-                                     np.matrix(np.array([0.,0.,0.]) *
-                                               np.array(np.squeeze(robot.visuals[i][4][3:6]))[0]).T)
-                #*self.visuals[i][4][3:6])
-                pose.rotation= robot.data.oMi[idx].rotation * oMp
+            
+            if osimref is True :
+                if robot.visuals[i][2] == 'markers':        
+                    pose.translation = robot.data.oMf[idx].translation #+ robot.visuals[i][4]
+                    
+                else:
+                    # convert bones pose
+                    pose.translation =  (robot.data.oMf[idx].translation + 
+                                         np.matrix(np.array([0.,0.,0.]) *
+                                                   np.array(np.squeeze(robot.visuals[i][4][3:6]))[0]).T)
+                    #*self.visuals[i][4][3:6])
+                    pose.rotation= robot.data.oMf[idx].rotation * oMp
 
             else:
-                pose.translation= robot.data.oMi[idx].translation+robot.visuals[i][4][3:6]
-                pose.rotation= robot.data.oMi[idx].rotation
+                if robot.visuals[i][2] == 'markers':
+                    pose.transation = robot.data.oMf[idx].translation
+        
+                else:
+                    pose.translation= robot.data.oMf[idx].translation+robot.visuals[i][4][3:6]
+                    pose.rotation= robot.data.oMf[idx].rotation
 
+                    
             # place objects
             if i != len(robot.visuals)-1:
-                self.viewer.gui.setScale('world/'+robot.name+'/'+
-                                         robot.visuals[i][1]+'_'+
-                                         os.path.split(robot.visuals[i][2])[1], 
-                                         robot.visuals[i][3])
-                self.placeObject('world/'+robot.name+'/'+
-                                 robot.visuals[i][1]+'_'+
-                                 os.path.split(robot.visuals[i][2])[1], pose, False)
+                if (robot.visuals[i][2] == "markers"):
+                    nodeName = 'world/'+robot.name
+                    self.placeObject(nodeName+'/'+robot.visuals[i][1], pose, False)
+                else :
+                    self.viewer.gui.setScale('world/'+robot.name+'/'+
+                                             robot.visuals[i][1]+'_'+
+                                             os.path.split(robot.visuals[i][2])[1], 
+                                             robot.visuals[i][3])
+                    self.placeObject('world/'+robot.name+'/'+
+                                     robot.visuals[i][1]+'_'+
+                                     os.path.split(robot.visuals[i][2])[1], pose, False)
             else:
-                self.viewer.gui.setScale('world/'+robot.name+'/'+
-                                         robot.visuals[i][1]+'_'+
-                                         os.path.split(robot.visuals[i][2])[1], 
-                                         robot.visuals[i][3])
-                self.placeObject('world/'+robot.name+'/'+
-                                 robot.visuals[i][1]+'_'+
-                                 os.path.split(robot.visuals[i][2])[1], pose, True)
+                if (robot.visuals[i][2] == "markers"):
+                    nodeName = 'world/'+robot.name
+                    self.placeObject(nodeName+'/'+robot.visuals[i][1], pose, True)
+                else:
+                    self.viewer.gui.setScale('world/'+robot.name+'/'+
+                                             robot.visuals[i][1]+'_'+
+                                             os.path.split(robot.visuals[i][2])[1], 
+                                             robot.visuals[i][3])
+                    self.placeObject('world/'+robot.name+'/'+
+                                     robot.visuals[i][1]+'_'+
+                                     os.path.split(robot.visuals[i][2])[1], pose, True)
             if joint_frames is True:
                 self.JointFrames(robot.name)
+        
     
     def updateRobotConfig(self, q, robotName, osimref=True):
         #self.robots[robotName].display(q, robotName)
@@ -213,7 +241,7 @@ class Viewer(object):
         robot = self.robots[robotName]
         if ON is True:
             #create nodes
-            for i in range(1, robot.model.nbodies):
+            for i in range(1, robot.model.njoints):
                 pose =  robot.data.oMi[i] 
                 root_node_name = 'world/'+robot.name+'/'+robot.model.names[i]
                 if self.viewer.gui.nodeExists(root_node_name+'_frame') is False:
