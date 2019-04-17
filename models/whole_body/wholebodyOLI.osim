@@ -1,136 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <OpenSimDocument Version="30000">
-	<Model name="Whole-body">
-		<defaults>
-			<ControlLinear name="default">
-				<is_model_control>true</is_model_control>
-				<extrapolate>true</extrapolate>
-				<default_min>-1</default_min>
-				<default_max>1</default_max>
-				<filter_on>false</filter_on>
-				<use_steps>false</use_steps>
-				<x_nodes />
-				<min_nodes />
-				<max_nodes />
-				<kp>100</kp>
-				<kv>20</kv>
-			</ControlLinear>
-			<CoordinateActuator name="default">
-				<!--Name of the generalized coordinate to which the actuator applies.-->
-				<coordinate>Unassigned</coordinate>
-				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>300</optimal_force>
-			</CoordinateActuator>
-			<PointActuator name="default">
-				<!--Name of Body to which this actuator is applied.-->
-				<body></body>
-				<!--Location of application point; in body frame unless point_is_global=true-->
-				<point>0 0 0</point>
-				<!--Interpret point in Ground frame if true; otherwise, body frame.-->
-				<point_is_global>false</point_is_global>
-				<!--Force application direction; in body frame unless force_is_global=true.-->
-				<direction>-1 -0 -0</direction>
-				<!--Interpret direction in Ground frame if true; otherwise, body frame.-->
-				<force_is_global>true</force_is_global>
-				<!--The maximum force produced by this actuator when fully activated.-->
-				<optimal_force>1000</optimal_force>
-			</PointActuator>
-			<TorqueActuator name="default">
-				<!--Name of Body to which the torque actuator is applied.-->
-				<bodyA>Unassigned</bodyA>
-				<!--Name of Body to which the equal and opposite torque is applied.-->
-				<bodyB>Unassigned</bodyB>
-				<!--Interpret axis in Ground frame if true; otherwise, body A's frame.-->
-				<torque_is_global>true</torque_is_global>
-				<!--Fixed direction about which torque is applied, in Ground or body A frame depending on 'torque_is_global' property.-->
-				<axis>-1 -0 -0</axis>
-				<!--The maximum torque produced by this actuator when fully activated.-->
-				<optimal_force>1</optimal_force>
-			</TorqueActuator>
-			<Thelen2003Muscle name="default">
-				<!--The set of points defining the path of the muscle.-->
-				<GeometryPath>
-					<!--The set of points defining the path-->
-					<PathPointSet>
-						<objects />
-						<groups />
-					</PathPointSet>
-					<!--The wrap objecs that are associated with this path-->
-					<PathWrapSet>
-						<objects />
-						<groups />
-					</PathWrapSet>
-					<!--Used to display the path in the 3D window-->
-					<VisibleObject name="display">
-						<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
-						<GeometrySet>
-							<objects />
-							<groups />
-						</GeometrySet>
-						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
-						<scale_factors> 1 1 1</scale_factors>
-						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
-						<transform> 0 0 0 0 0 0</transform>
-						<!--Whether to show a coordinate frame-->
-						<show_axes>false</show_axes>
-						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
-						<display_preference>4</display_preference>
-					</VisibleObject>
-				</GeometryPath>
-				<!--Maximum isometric force that the fibers can generate-->
-				<max_isometric_force>546</max_isometric_force>
-				<!--Optimal length of the muscle fibers-->
-				<optimal_fiber_length>0.0535</optimal_fiber_length>
-				<!--Resting length of the tendon-->
-				<tendon_slack_length>0.078</tendon_slack_length>
-				<!--Angle between tendon and fibers at optimal fiber length expressed in radians-->
-				<pennation_angle_at_optimal>0</pennation_angle_at_optimal>
-				<!--time constant for ramping up muscle activation-->
-				<activation_time_constant>0.01</activation_time_constant>
-				<!--time constant for ramping down of muscle activation-->
-				<deactivation_time_constant>0.04</deactivation_time_constant>
-				<!--tendon strain at maximum isometric muscle force-->
-				<FmaxTendonStrain>0.033</FmaxTendonStrain>
-				<!--passive muscle strain at maximum isometric muscle force-->
-				<FmaxMuscleStrain>0.6</FmaxMuscleStrain>
-				<!--shape factor for Gaussian active muscle force-length relationship-->
-				<KshapeActive>0.5</KshapeActive>
-				<!--exponential shape factor for passive force-length relationship-->
-				<KshapePassive>4</KshapePassive>
-				<!--force-velocity shape factor-->
-				<Af>0.3</Af>
-				<!--maximum normalized lengthening force-->
-				<Flen>1.8</Flen>
-			</Thelen2003Muscle>
-			<CMC_Joint name="default">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>false</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 1 1 1</weight>
-				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
-				<wrt_body>-1</wrt_body>
-				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
-				<express_body>-1</express_body>
-				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
-				<active>false false false </active>
-				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
-				<kp> 1 1 1</kp>
-				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
-				<kv> 1 1 1</kv>
-				<!--Feedforward acceleration gain.  This is normally set to 1.0, so no gain.-->
-				<ka> 1 1 1</ka>
-				<!--Direction vector[3] for component 0 of a task. Joint tasks do not use this propery.-->
-				<r0> 0 0 0</r0>
-				<!--Direction vector[3] for component 1 of a task. Joint tasks do not use this property.-->
-				<r1> 0 0 0</r1>
-				<!--Direction vector[3] for component 2 of a task. Joint tasks do not use this property.-->
-				<r2> 0 0 0</r2>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate />
-				<!--Error limit on the tracking accuracy for this coordinate. If the tracking errors approach this limit, the weighting for this coordinate is increased. -->
-				<limit>0</limit>
-			</CMC_Joint>
-		</defaults>
+	<Model name="Whole-body-scaled">
 		<credits>Delp S.L., Loan J.P., Hoy M.G., Zajac F.E., Topp E.L., Rosen J.M., Thelen D.G., Anderson F.C., Seth A., Hamner S.R.</credits>
 		<publications>Whole body model that consists of 23 bodies, 42 degrees of freedom and 30 muscles. The whole-body geometric model and the lower limbs, pelvis and upper limbs anthropometry are based on the running model of Hammer et al. 2010 which consists of 12 segments and 29 degrees of freedom. Extra segments and degrees of freedom were later added based on Dumas et al. 2007. Muscles …Each lower extremity had seven degrees-of-freedom; the hip was modeled as a ball-and-socket joint (3 dofs), the knee was modeled as a revolute joint with 1 dof, the ankle was modeled as 2 revolute joints and feet toes with one revolute joint. The pelvis joint was model as a free flyer joint (6 dofs) to allow the model to translate and rotate in the 3D space, the lumbar motion was modeled as a ball-and-socket joint (3 dofs) (Anderson and Pandy, 1999) and the neck joint was modeled as a ball-and-socket joint (3 dofs). Mass properties of the torso and head (including the neck) segments were estimated from Dumas et al., 2007. Each arm consisted of 8 degrees-of-freedom; the shoulder was modeled as a ball-and-socket joint (3 dofs), the elbow and forearm rotation were each modeled with revolute joints (1 dof) (Holzbaur et al., 2005), the wrist flexion and deviation were each modeled with revolute joints and the hand fingers were modeled with 1 revolute joint. Mass properties for the arms were estimated from 1 and de Leva, 1996. The model also include 30 superficial muscles of the whole body..</publications>
 		<length_units>meters</length_units>
@@ -152,8 +22,15 @@
 					<!--Joint that connects this body with the parent body.-->
 					<Joint />
 					<VisibleObject>
+						<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+						<GeometrySet>
+							<objects />
+							<groups />
+						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -165,11 +42,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="pelvis">
-					<mass>11.777</mass>
+					<mass>11.9226954969944</mass>
 					<mass_center> -0.0707 0 0</mass_center>
-					<inertia_xx>0.1028</inertia_xx>
-					<inertia_yy>0.0871</inertia_yy>
-					<inertia_zz>0.0579</inertia_zz>
+					<inertia_xx>0.10407175826535</inertia_xx>
+					<inertia_yy>0.088177530592529</inertia_yy>
+					<inertia_zz>0.0586162918634607</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -438,6 +315,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -449,11 +328,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="femur_r">
-					<mass>9.3014</mass>
+					<mass>9.41646938063546</mass>
 					<mass_center> 0 -0.17 0</mass_center>
-					<inertia_xx>0.1339</inertia_xx>
-					<inertia_yy>0.0351</inertia_yy>
-					<inertia_zz>0.1412</inertia_zz>
+					<inertia_xx>0.135556502254186</inertia_xx>
+					<inertia_yy>0.035534228746243</inertia_yy>
+					<inertia_zz>0.142946811936453</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -579,9 +458,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -591,9 +475,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -603,9 +492,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -636,6 +530,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -647,11 +543,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="tibia_r">
-					<mass>3.7075</mass>
+					<mass>3.75336618452125</mass>
 					<mass_center> 0 -0.1867 0</mass_center>
-					<inertia_xx>0.0504</inertia_xx>
-					<inertia_yy>0.0051</inertia_yy>
-					<inertia_zz>0.0511</inertia_zz>
+					<inertia_xx>0.0510235079433233</inertia_xx>
+					<inertia_yy>0.00516309306569343</inertia_yy>
+					<inertia_zz>0.0517321677758695</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -741,9 +637,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -753,9 +654,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -765,9 +671,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -814,6 +725,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -825,11 +738,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="talus_r">
-					<mass>0.1</mass>
+					<mass>0.101237118935165</mass>
 					<mass_center> 0 0 0</mass_center>
-					<inertia_xx>0.001</inertia_xx>
-					<inertia_yy>0.001</inertia_yy>
-					<inertia_zz>0.001</inertia_zz>
+					<inertia_xx>0.00101237118935165</inertia_xx>
+					<inertia_yy>0.00101237118935165</inertia_yy>
+					<inertia_zz>0.00101237118935165</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -919,9 +832,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -931,9 +849,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -943,9 +866,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -976,6 +904,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -987,11 +917,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="calcn_r">
-					<mass>1.25</mass>
+					<mass>1.26546398668957</mass>
 					<mass_center> 0.1 0.03 0</mass_center>
-					<inertia_xx>0.0014</inertia_xx>
-					<inertia_yy>0.0039</inertia_yy>
-					<inertia_zz>0.0041</inertia_zz>
+					<inertia_xx>0.00141731966509231</inertia_xx>
+					<inertia_yy>0.00394824763847145</inertia_yy>
+					<inertia_zz>0.00415072187634178</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -1081,9 +1011,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -1093,9 +1028,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -1105,9 +1045,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -1138,6 +1083,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -1149,11 +1096,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="toes_r">
-					<mass>0.2166</mass>
+					<mass>0.219279599613568</mass>
 					<mass_center> 0.0346 0.006 -0.0175</mass_center>
-					<inertia_xx>0.0001</inertia_xx>
-					<inertia_yy>0.0002</inertia_yy>
-					<inertia_zz>0.001</inertia_zz>
+					<inertia_xx>0.000101237118935165</inertia_xx>
+					<inertia_yy>0.000202474237870331</inertia_yy>
+					<inertia_zz>0.00101237118935165</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -1243,9 +1190,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -1255,9 +1207,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -1267,9 +1224,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -1300,6 +1262,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -1311,11 +1275,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="femur_l">
-					<mass>9.3014</mass>
+					<mass>9.41646938063546</mass>
 					<mass_center> 0 -0.17 0</mass_center>
-					<inertia_xx>0.1339</inertia_xx>
-					<inertia_yy>0.0351</inertia_yy>
-					<inertia_zz>0.1412</inertia_zz>
+					<inertia_xx>0.135556502254186</inertia_xx>
+					<inertia_yy>0.035534228746243</inertia_yy>
+					<inertia_zz>0.142946811936453</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -1441,9 +1405,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -1453,9 +1422,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -1465,9 +1439,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -1498,6 +1477,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -1509,11 +1490,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="tibia_l">
-					<mass>3.7075</mass>
+					<mass>3.75336618452125</mass>
 					<mass_center> 0 -0.1867 0</mass_center>
-					<inertia_xx>0.0504</inertia_xx>
-					<inertia_yy>0.0051</inertia_yy>
-					<inertia_zz>0.0511</inertia_zz>
+					<inertia_xx>0.0510235079433233</inertia_xx>
+					<inertia_yy>0.00516309306569343</inertia_yy>
+					<inertia_zz>0.0517321677758695</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -1603,9 +1584,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -1615,9 +1601,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -1627,9 +1618,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -1676,6 +1672,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -1687,11 +1685,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="talus_l">
-					<mass>0.1</mass>
+					<mass>0.101237118935165</mass>
 					<mass_center> 0 0 0</mass_center>
-					<inertia_xx>0.001</inertia_xx>
-					<inertia_yy>0.001</inertia_yy>
-					<inertia_zz>0.001</inertia_zz>
+					<inertia_xx>0.00101237118935165</inertia_xx>
+					<inertia_yy>0.00101237118935165</inertia_yy>
+					<inertia_zz>0.00101237118935165</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -1781,9 +1779,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -1793,9 +1796,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -1805,9 +1813,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -1838,6 +1851,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -1849,11 +1864,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="calcn_l">
-					<mass>1.25</mass>
+					<mass>1.26546398668957</mass>
 					<mass_center> 0.1 0.03 0</mass_center>
-					<inertia_xx>0.0014</inertia_xx>
-					<inertia_yy>0.0039</inertia_yy>
-					<inertia_zz>0.0041</inertia_zz>
+					<inertia_xx>0.00141731966509231</inertia_xx>
+					<inertia_yy>0.00394824763847145</inertia_yy>
+					<inertia_zz>0.00415072187634178</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -1943,9 +1958,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -1955,9 +1975,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -1967,9 +1992,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -2000,6 +2030,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -2011,11 +2043,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="toes_l">
-					<mass>0.2166</mass>
+					<mass>0.219279599613568</mass>
 					<mass_center> 0.0346 0.006 0.0175</mass_center>
-					<inertia_xx>0.0001</inertia_xx>
-					<inertia_yy>0.0002</inertia_yy>
-					<inertia_zz>0.001</inertia_zz>
+					<inertia_xx>0.000101237118935165</inertia_xx>
+					<inertia_yy>0.000202474237870331</inertia_yy>
+					<inertia_zz>0.00101237118935165</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -2105,9 +2137,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -2117,9 +2154,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -2129,9 +2171,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -2162,6 +2209,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -2173,11 +2222,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="torso">
-					<mass>21.28</mass>
+					<mass>21.5432589094032</mass>
 					<mass_center> 0.003 0.246 0</mass_center>
-					<inertia_xx>0.6274994</inertia_xx>
-					<inertia_yy>0.6274994</inertia_yy>
-					<inertia_zz>0.8455845</inertia_zz>
+					<inertia_xx>0.635262313895449</inertia_xx>
+					<inertia_yy>0.635262313895449</inertia_yy>
+					<inertia_zz>0.856045385962323</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -2303,9 +2352,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -2315,9 +2369,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -2327,9 +2386,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -2376,6 +2440,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -2387,14 +2453,14 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="head_and_neck">
-					<mass>4.69</mass>
+					<mass>4.74802087805925</mass>
 					<mass_center> -0.006 0.149 0</mass_center>
-					<inertia_xx>0.0268334</inertia_xx>
-					<inertia_yy>0.0174515</inertia_yy>
-					<inertia_zz>0.0269334</inertia_zz>
-					<inertia_xy>0.000226171</inertia_xy>
-					<inertia_xz>0.000251301</inertia_xz>
-					<inertia_yz>0.00011169</inertia_yz>
+					<inertia_xx>0.0271653610723486</inertia_xx>
+					<inertia_yy>0.0176673958109704</inertia_yy>
+					<inertia_zz>0.0272665981912838</inertia_zz>
+					<inertia_xy>0.000228969004266853</inertia_xy>
+					<inertia_xz>0.00025440989225526</inertia_xz>
+					<inertia_yz>0.000113071738138686</inertia_yz>
 					<!--Joint that connects this body with the parent body.-->
 					<Joint>
 						<CustomJoint name="neck">
@@ -2517,9 +2583,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -2529,9 +2600,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -2541,9 +2617,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -2590,6 +2671,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -2601,11 +2684,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="humerus_r">
-					<mass>2.0325</mass>
+					<mass>2.05764444235723</mass>
 					<mass_center> 0 -0.164502 0</mass_center>
-					<inertia_xx>0.011946</inertia_xx>
-					<inertia_yy>0.004121</inertia_yy>
-					<inertia_zz>0.013409</inertia_zz>
+					<inertia_xx>0.0120937862279948</inertia_xx>
+					<inertia_yy>0.00417198167131816</inertia_yy>
+					<inertia_zz>0.0135748852780163</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -2731,9 +2814,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -2743,9 +2831,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -2755,9 +2848,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -2788,6 +2886,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -2799,11 +2899,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="ulna_r">
-					<mass>0.6075</mass>
+					<mass>0.615015497531129</mass>
 					<mass_center> 0 -0.120525 0</mass_center>
-					<inertia_xx>0.002962</inertia_xx>
-					<inertia_yy>0.000618</inertia_yy>
-					<inertia_zz>0.003213</inertia_zz>
+					<inertia_xx>0.0029986434628596</inertia_xx>
+					<inertia_yy>0.000625645395019321</inertia_yy>
+					<inertia_zz>0.00325274863138686</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -2893,9 +2993,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -2905,9 +3010,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -2917,9 +3027,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -2950,6 +3065,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -2961,11 +3078,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="radius_r">
-					<mass>0.6075</mass>
+					<mass>0.615015497531129</mass>
 					<mass_center> 0 -0.120525 0</mass_center>
-					<inertia_xx>0.002962</inertia_xx>
-					<inertia_yy>0.000618</inertia_yy>
-					<inertia_zz>0.003213</inertia_zz>
+					<inertia_xx>0.0029986434628596</inertia_xx>
+					<inertia_yy>0.000625645395019321</inertia_yy>
+					<inertia_zz>0.00325274863138686</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -3055,9 +3172,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -3067,9 +3189,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -3079,9 +3206,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -3112,6 +3244,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -3123,11 +3257,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="lunate_r">
-					<mass>0.01</mass>
+					<mass>0.0101237118935165</mass>
 					<mass_center> 0 0 0</mass_center>
-					<inertia_xx>1e-005</inertia_xx>
-					<inertia_yy>1e-005</inertia_yy>
-					<inertia_zz>1e-005</inertia_zz>
+					<inertia_xx>1.01237118935165e-005</inertia_xx>
+					<inertia_yy>1.01237118935165e-005</inertia_yy>
+					<inertia_zz>1.01237118935165e-005</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -3217,9 +3351,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -3229,9 +3368,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -3241,9 +3385,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -3274,6 +3423,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 0.85 0.85 0.85</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -3285,11 +3436,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="hand_r">
-					<mass>0.4575</mass>
+					<mass>0.463159819128381</mass>
 					<mass_center> 0 -0.068095 0</mass_center>
-					<inertia_xx>0.000892</inertia_xx>
-					<inertia_yy>0.000547</inertia_yy>
-					<inertia_zz>0.00134</inertia_zz>
+					<inertia_xx>0.000903035100901674</inertia_xx>
+					<inertia_yy>0.000553767040575354</inertia_yy>
+					<inertia_zz>0.00135657739373122</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -3379,9 +3530,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -3391,9 +3547,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -3403,9 +3564,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -3644,6 +3810,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 0.85 0.85 0.85</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -3655,11 +3823,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="fingers_r">
-					<mass>0.1</mass>
+					<mass>0.101237118935165</mass>
 					<mass_center> 0 -0.068095 0</mass_center>
-					<inertia_xx>0.001</inertia_xx>
-					<inertia_yy>0.001</inertia_yy>
-					<inertia_zz>0.001</inertia_zz>
+					<inertia_xx>0.00101237118935165</inertia_xx>
+					<inertia_yy>0.00101237118935165</inertia_yy>
+					<inertia_zz>0.00101237118935165</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -3749,9 +3917,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -3761,9 +3934,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -3773,9 +3951,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -3982,6 +4165,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 0.85 0.85 0.85</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -3993,11 +4178,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="humerus_l">
-					<mass>2.0325</mass>
+					<mass>2.05764444235723</mass>
 					<mass_center> 0 -0.164502 0</mass_center>
-					<inertia_xx>0.011946</inertia_xx>
-					<inertia_yy>0.004121</inertia_yy>
-					<inertia_zz>0.013409</inertia_zz>
+					<inertia_xx>0.0120937862279948</inertia_xx>
+					<inertia_yy>0.00417198167131816</inertia_yy>
+					<inertia_zz>0.0135748852780163</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -4123,9 +4308,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -4135,9 +4325,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -4147,9 +4342,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -4180,6 +4380,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -4191,11 +4393,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="ulna_l">
-					<mass>0.6075</mass>
+					<mass>0.615015497531129</mass>
 					<mass_center> 0 -0.120525 0</mass_center>
-					<inertia_xx>0.002962</inertia_xx>
-					<inertia_yy>0.000618</inertia_yy>
-					<inertia_zz>0.003213</inertia_zz>
+					<inertia_xx>0.0029986434628596</inertia_xx>
+					<inertia_yy>0.000625645395019321</inertia_yy>
+					<inertia_zz>0.00325274863138686</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -4285,9 +4487,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -4297,9 +4504,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -4309,9 +4521,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -4342,6 +4559,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -4353,11 +4572,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="radius_l">
-					<mass>0.6075</mass>
+					<mass>0.615015497531129</mass>
 					<mass_center> 0 -0.120525 0</mass_center>
-					<inertia_xx>0.002962</inertia_xx>
-					<inertia_yy>0.000618</inertia_yy>
-					<inertia_zz>0.003213</inertia_zz>
+					<inertia_xx>0.0029986434628596</inertia_xx>
+					<inertia_yy>0.000625645395019321</inertia_yy>
+					<inertia_zz>0.00325274863138686</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -4447,9 +4666,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -4459,9 +4683,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -4471,9 +4700,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -4504,6 +4738,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 1 1 1</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -4515,11 +4751,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="lunate_l">
-					<mass>0.01</mass>
+					<mass>0.0101237118935165</mass>
 					<mass_center> 0 0 0</mass_center>
-					<inertia_xx>1e-005</inertia_xx>
-					<inertia_yy>1e-005</inertia_yy>
-					<inertia_zz>1e-005</inertia_zz>
+					<inertia_xx>1.01237118935165e-005</inertia_xx>
+					<inertia_yy>1.01237118935165e-005</inertia_yy>
+					<inertia_zz>1.01237118935165e-005</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -4609,9 +4845,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -4621,9 +4862,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -4633,9 +4879,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -4666,6 +4917,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 0.85 0.85 0.85</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -4677,11 +4930,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="hand_l">
-					<mass>0.4575</mass>
+					<mass>0.463159819128381</mass>
 					<mass_center> 0 -0.068095 0</mass_center>
-					<inertia_xx>0.000892</inertia_xx>
-					<inertia_yy>0.000547</inertia_yy>
-					<inertia_zz>0.00134</inertia_zz>
+					<inertia_xx>0.000903035100901674</inertia_xx>
+					<inertia_yy>0.000553767040575354</inertia_yy>
+					<inertia_zz>0.00135657739373122</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -4771,9 +5024,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -4783,9 +5041,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -4795,9 +5058,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -5036,6 +5304,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 0.85 0.85 0.85</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -5047,11 +5317,11 @@
 					</WrapObjectSet>
 				</Body>
 				<Body name="fingers_l">
-					<mass>0.1</mass>
+					<mass>0.101237118935165</mass>
 					<mass_center> 0 -0.068095 0</mass_center>
-					<inertia_xx>0.001</inertia_xx>
-					<inertia_yy>0.001</inertia_yy>
-					<inertia_zz>0.001</inertia_zz>
+					<inertia_xx>0.00101237118935165</inertia_xx>
+					<inertia_yy>0.00101237118935165</inertia_yy>
+					<inertia_zz>0.00101237118935165</inertia_zz>
 					<inertia_xy>0</inertia_xy>
 					<inertia_xz>0</inertia_xz>
 					<inertia_yz>0</inertia_yz>
@@ -5141,9 +5411,14 @@
 									<axis>1 0 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation2">
@@ -5153,9 +5428,14 @@
 									<axis>0 1 0</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 								<TransformAxis name="translation3">
@@ -5165,9 +5445,14 @@
 									<axis>0 0 1</axis>
 									<!--Transform function of the generalized coordinates used to        represent the amount of transformation along a specified axis.-->
 									<function>
-										<Constant>
-											<value>0</value>
-										</Constant>
+										<MultiplierFunction>
+											<function>
+												<Constant>
+													<value>0</value>
+												</Constant>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</function>
 								</TransformAxis>
 							</SpatialTransform>
@@ -5374,6 +5659,8 @@
 						</GeometrySet>
 						<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 						<scale_factors> 0.85 0.85 0.85</scale_factors>
+						<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+						<transform> -0 0 -0 0 0 0</transform>
 						<!--Whether to show a coordinate frame-->
 						<show_axes>false</show_axes>
 						<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -5418,6 +5705,7 @@
 									<body>torso</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -5468,6 +5756,7 @@
 									<body>torso</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -5514,6 +5803,7 @@
 									<body>torso</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -5564,6 +5854,7 @@
 									<body>torso</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -5614,6 +5905,7 @@
 									<body>torso</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -5660,6 +5952,7 @@
 									<body>torso</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -5711,8 +6004,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -5782,8 +6082,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -5843,8 +6150,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -5912,8 +6226,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -5977,8 +6298,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6037,27 +6365,42 @@
 									<coordinate>knee_angle_r</coordinate>
 								</ConditionalPathPoint>
 								<MovingPathPoint name="vas_med_r-P5">
-									<location> 0.0559586 0.0217917 -0.0146</location>
+									<location> 0.0496429 0.0224947 -0.0146</location>
 									<body>tibia_r</body>
 									<x_location>
-										<SimmSpline>
-											<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
-											<y> 0.00981097 0.0122243 0.0217371 0.0238851 0.0249902 0.0307959 0.0364187 0.0392871 0.0425654 0.0475764 0.0559586 0.0559681 0.0559776 0.0575419 0.0613368 0.0679503 0.0629332</y>
-										</SimmSpline>
+										<MultiplierFunction>
+											<function>
+												<SimmSpline>
+													<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
+													<y> 0.00981097 0.0122243 0.0217371 0.0238851 0.0249902 0.0307959 0.0364187 0.0392871 0.0425654 0.0475764 0.0559586 0.0559681 0.0559776 0.0575419 0.0613368 0.0679503 0.0629332</y>
+												</SimmSpline>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</x_location>
 									<x_coordinate>knee_angle_r</x_coordinate>
 									<y_location>
-										<SimmSpline>
-											<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
-											<y> 0.0224154 0.0227651 0.0241265 0.0242933 0.0243287 0.0239462 0.0233593 0.0230677 0.0228342 0.0226362 0.0217917 0.0217903 0.0217889 0.0215365 0.0206842 0.0183269 -0.0656205</y>
-										</SimmSpline>
+										<MultiplierFunction>
+											<function>
+												<SimmSpline>
+													<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
+													<y> 0.0224154 0.0227651 0.0241265 0.0242933 0.0243287 0.0239462 0.0233593 0.0230677 0.0228342 0.0226362 0.0217917 0.0217903 0.0217889 0.0215365 0.0206842 0.0183269 -0.0656205</y>
+												</SimmSpline>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</y_location>
 									<y_coordinate>knee_angle_r</y_coordinate>
 									<z_location>
-										<SimmSpline>
-											<x> -2.0944 2.0944</x>
-											<y> -0.0146 -0.0146</y>
-										</SimmSpline>
+										<MultiplierFunction>
+											<function>
+												<SimmSpline>
+													<x> -2.0944 2.0944</x>
+													<y> -0.0146 -0.0146</y>
+												</SimmSpline>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</z_location>
 									<z_coordinate>knee_angle_r</z_coordinate>
 								</MovingPathPoint>
@@ -6071,8 +6414,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6131,27 +6481,42 @@
 									<coordinate>knee_angle_r</coordinate>
 								</ConditionalPathPoint>
 								<MovingPathPoint name="vas_lat_r-P5">
-									<location> 0.0599557 0.0195864 0.0165</location>
+									<location> 0.0538891 0.0207987 0.0165</location>
 									<body>tibia_r</body>
 									<x_location>
-										<SimmSpline>
-											<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
-											<y> 0.0142897 0.016703 0.0262145 0.0283623 0.0294674 0.0352709 0.0408785 0.0437291 0.0469704 0.0518742 0.0599557 0.0599647 0.0599738 0.0614577 0.0650351 0.0711867 0.0583766</y>
-										</SimmSpline>
+										<MultiplierFunction>
+											<function>
+												<SimmSpline>
+													<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
+													<y> 0.0142897 0.016703 0.0262145 0.0283623 0.0294674 0.0352709 0.0408785 0.0437291 0.0469704 0.0518742 0.0599557 0.0599647 0.0599738 0.0614577 0.0650351 0.0711867 0.0583766</y>
+												</SimmSpline>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</x_location>
 									<x_coordinate>knee_angle_r</x_coordinate>
 									<y_location>
-										<SimmSpline>
-											<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
-											<y> 0.0215318 0.0218815 0.0232362 0.0234019 0.0234371 0.0230439 0.0223842 0.0220151 0.0216359 0.0210971 0.0195864 0.0195842 0.019582 0.01919 0.018008 0.0151073 -0.0653421</y>
-										</SimmSpline>
+										<MultiplierFunction>
+											<function>
+												<SimmSpline>
+													<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
+													<y> 0.0215318 0.0218815 0.0232362 0.0234019 0.0234371 0.0230439 0.0223842 0.0220151 0.0216359 0.0210971 0.0195864 0.0195842 0.019582 0.01919 0.018008 0.0151073 -0.0653421</y>
+												</SimmSpline>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</y_location>
 									<y_coordinate>knee_angle_r</y_coordinate>
 									<z_location>
-										<SimmSpline>
-											<x> -2.0944 2.0944</x>
-											<y> 0.0165 0.0165</y>
-										</SimmSpline>
+										<MultiplierFunction>
+											<function>
+												<SimmSpline>
+													<x> -2.0944 2.0944</x>
+													<y> 0.0165 0.0165</y>
+												</SimmSpline>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</z_location>
 									<z_coordinate>knee_angle_r</z_coordinate>
 								</MovingPathPoint>
@@ -6165,8 +6530,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6228,8 +6600,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6291,8 +6670,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6348,8 +6734,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6413,8 +6806,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6474,8 +6874,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6551,8 +6958,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6608,8 +7022,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6679,8 +7100,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6740,8 +7168,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6809,8 +7244,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6874,8 +7316,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -6934,27 +7383,42 @@
 									<coordinate>knee_angle_l</coordinate>
 								</ConditionalPathPoint>
 								<MovingPathPoint name="vas_med_l-P5">
-									<location> 0.0559586 0.0217917 0.0146</location>
+									<location> 0.055768 0.0218196 0.0146</location>
 									<body>tibia_l</body>
 									<x_location>
-										<SimmSpline>
-											<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
-											<y> 0.00981097 0.0122243 0.0217371 0.0238851 0.0249902 0.0307959 0.0364187 0.0392871 0.0425654 0.0475764 0.0559586 0.0559681 0.0559776 0.0575419 0.0613368 0.0679503 0.0629332</y>
-										</SimmSpline>
+										<MultiplierFunction>
+											<function>
+												<SimmSpline>
+													<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
+													<y> 0.00981097 0.0122243 0.0217371 0.0238851 0.0249902 0.0307959 0.0364187 0.0392871 0.0425654 0.0475764 0.0559586 0.0559681 0.0559776 0.0575419 0.0613368 0.0679503 0.0629332</y>
+												</SimmSpline>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</x_location>
 									<x_coordinate>knee_angle_l</x_coordinate>
 									<y_location>
-										<SimmSpline>
-											<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
-											<y> 0.0224154 0.0227651 0.0241265 0.0242933 0.0243287 0.0239462 0.0233593 0.0230677 0.0228342 0.0226362 0.0217917 0.0217903 0.0217889 0.0215365 0.0206842 0.0183269 -0.0656205</y>
-										</SimmSpline>
+										<MultiplierFunction>
+											<function>
+												<SimmSpline>
+													<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
+													<y> 0.0224154 0.0227651 0.0241265 0.0242933 0.0243287 0.0239462 0.0233593 0.0230677 0.0228342 0.0226362 0.0217917 0.0217903 0.0217889 0.0215365 0.0206842 0.0183269 -0.0656205</y>
+												</SimmSpline>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</y_location>
 									<y_coordinate>knee_angle_l</y_coordinate>
 									<z_location>
-										<SimmSpline>
-											<x> -2.0944 2.0944</x>
-											<y> 0.0146 0.0146</y>
-										</SimmSpline>
+										<MultiplierFunction>
+											<function>
+												<SimmSpline>
+													<x> -2.0944 2.0944</x>
+													<y> 0.0146 0.0146</y>
+												</SimmSpline>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</z_location>
 									<z_coordinate>knee_angle_l</z_coordinate>
 								</MovingPathPoint>
@@ -6968,8 +7432,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -7028,27 +7499,42 @@
 									<coordinate>knee_angle_l</coordinate>
 								</ConditionalPathPoint>
 								<MovingPathPoint name="vas_lat_l-P5">
-									<location> 0.0599557 0.0195864 -0.0165</location>
+									<location> 0.0597755 0.0196303 -0.0165</location>
 									<body>tibia_l</body>
 									<x_location>
-										<SimmSpline>
-											<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
-											<y> 0.0142897 0.016703 0.0262145 0.0283623 0.0294674 0.0352709 0.0408785 0.0437291 0.0469704 0.0518742 0.0599557 0.0599647 0.0599738 0.0614577 0.0650351 0.0711867 0.0583766</y>
-										</SimmSpline>
+										<MultiplierFunction>
+											<function>
+												<SimmSpline>
+													<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
+													<y> 0.0142897 0.016703 0.0262145 0.0283623 0.0294674 0.0352709 0.0408785 0.0437291 0.0469704 0.0518742 0.0599557 0.0599647 0.0599738 0.0614577 0.0650351 0.0711867 0.0583766</y>
+												</SimmSpline>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</x_location>
 									<x_coordinate>knee_angle_l</x_coordinate>
 									<y_location>
-										<SimmSpline>
-											<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
-											<y> 0.0215318 0.0218815 0.0232362 0.0234019 0.0234371 0.0230439 0.0223842 0.0220151 0.0216359 0.0210971 0.0195864 0.0195842 0.019582 0.01919 0.018008 0.0151073 -0.0653421</y>
-										</SimmSpline>
+										<MultiplierFunction>
+											<function>
+												<SimmSpline>
+													<x> -2.0944 -1.99997 -1.5708 -1.45752 -1.39626 -1.0472 -0.698132 -0.526391 -0.349066 -0.174533 0 0.00017453 0.00034907 0.0279253 0.0872665 0.174533 2.0944</x>
+													<y> 0.0215318 0.0218815 0.0232362 0.0234019 0.0234371 0.0230439 0.0223842 0.0220151 0.0216359 0.0210971 0.0195864 0.0195842 0.019582 0.01919 0.018008 0.0151073 -0.0653421</y>
+												</SimmSpline>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</y_location>
 									<y_coordinate>knee_angle_l</y_coordinate>
 									<z_location>
-										<SimmSpline>
-											<x> -2.0944 2.0944</x>
-											<y> -0.0165 -0.0165</y>
-										</SimmSpline>
+										<MultiplierFunction>
+											<function>
+												<SimmSpline>
+													<x> -2.0944 2.0944</x>
+													<y> -0.0165 -0.0165</y>
+												</SimmSpline>
+											</function>
+											<scale>1</scale>
+										</MultiplierFunction>
 									</z_location>
 									<z_coordinate>knee_angle_l</z_coordinate>
 								</MovingPathPoint>
@@ -7062,8 +7548,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -7125,8 +7618,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -7188,8 +7688,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -7245,8 +7752,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -7310,8 +7824,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -7371,8 +7892,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -7448,8 +7976,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -7505,8 +8040,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -7562,8 +8104,15 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
 							<!--Whether to show a coordinate frame-->
 							<show_axes>false</show_axes>
 							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
@@ -7619,8 +8168,19 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
+							<!--Whether to show a coordinate frame-->
+							<show_axes>false</show_axes>
+							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
+							<display_preference>4</display_preference>
 						</VisibleObject>
 					</GeometryPath>
 					<!--Maximum isometric force that the fibers can generate-->
@@ -7654,8 +8214,19 @@
 						</PathWrapSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
+							<!--Set of geometry files and associated attributes, allow .vtp, .stl, .obj-->
+							<GeometrySet>
+								<objects />
+								<groups />
+							</GeometrySet>
 							<!--Three scale factors for display purposes: scaleX scaleY scaleZ-->
 							<scale_factors> 1 1 1</scale_factors>
+							<!--transform relative to owner specified as 3 rotations (rad) followed by 3 translations rX rY rZ tx ty tz-->
+							<transform> -0 0 -0 0 0 0</transform>
+							<!--Whether to show a coordinate frame-->
+							<show_axes>false</show_axes>
+							<!--Display Pref. 0:Hide 1:Wire 3:Flat 4:Shaded Can be overriden for individual geometries-->
+							<display_preference>4</display_preference>
 						</VisibleObject>
 					</GeometryPath>
 					<!--Maximum isometric force that the fibers can generate-->
@@ -7680,6 +8251,7 @@
 									<body>head_and_neck</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -7722,6 +8294,7 @@
 									<body>head_and_neck</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -7764,6 +8337,7 @@
 									<body>torso</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -7806,6 +8380,7 @@
 									<body>torso</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -7860,6 +8435,7 @@
 									<body>ulna_r</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -7914,6 +8490,7 @@
 									<body>ulna_l</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -7968,6 +8545,7 @@
 									<body>ulna_r</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8022,6 +8600,7 @@
 									<body>ulna_l</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8096,6 +8675,7 @@
 									<body>radius_r</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8170,6 +8750,7 @@
 									<body>radius_l</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8216,6 +8797,7 @@
 									<body>radius_r</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8262,6 +8844,7 @@
 									<body>radius_l</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8308,6 +8891,7 @@
 									<body>hand_r</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8354,6 +8938,7 @@
 									<body>hand_l</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8404,6 +8989,7 @@
 									<body>hand_r</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8454,6 +9040,7 @@
 									<body>hand_l</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8504,6 +9091,7 @@
 									<body>radius_r</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8554,6 +9142,7 @@
 									<body>radius_l</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8604,6 +9193,7 @@
 									<body>torso</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8654,6 +9244,7 @@
 									<body>torso</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8704,6 +9295,7 @@
 									<body>torso</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8754,6 +9346,7 @@
 									<body>torso</body>
 								</PathPoint>
 							</objects>
+							<groups />
 						</PathPointSet>
 						<!--Used to display the path in the 3D window-->
 						<VisibleObject name="display">
@@ -8899,27 +9492,27 @@
 		<!--Markers in the model.-->
 		<MarkerSet>
 			<objects>
-				<Marker name="STR">
+				<Marker name="XYP">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>torso</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.1 0.22 0</location>
+					<location> 0.125267 0.200857 0.00324241</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RA">
+				<Marker name="RACR">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>torso</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.03 0.42 0.15</location>
+					<location> -0.0120672 0.431397 0.157497</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="LA">
+				<Marker name="LACR">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>torso</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.03 0.42 -0.15</location>
+					<location> -0.0148697 0.424132 -0.153185</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -8927,55 +9520,39 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>torso</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.076 0.43 0</location>
+					<location> -0.0893491 0.389123 -0.00103405</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="T10">
+				<Marker name="L4">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>torso</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.11 0.21 0</location>
+					<location> -0.115189 0.203921 0.00311629</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="SUP">
+				<Marker name="STE">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>torso</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.041 0.38 0</location>
+					<location> 0.092018 0.368295 0.000457692</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RLHE">
+				<Marker name="RLEC">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>humerus_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.025 -0.27 0.038</location>
+					<location> 0.0243969 -0.266297 0.0432159</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RMHE">
+				<Marker name="RMEC">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>humerus_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.001 -0.28 -0.045</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="REJC">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>humerus_r</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0.00584 -0.28069 -0.0002</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="RUS">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>radius_r</body>
-					<!--Location of a marker on the body segment.-->
-					<location> -0.015 -0.23 -0.018</location>
+					<location> 0.00851724 -0.271657 -0.0490369</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -8983,71 +9560,31 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>radius_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.003 -0.23 0.05</location>
+					<location> -0.0262898 -0.255712 -0.0279894</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RWJC">
+				<Marker name="RLS">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>radius_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.01 -0.23187 0.017</location>
+					<location> 0.0100634 -0.227486 0.0570619</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RHMH5">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>hand_r</body>
-					<!--Location of a marker on the body segment.-->
-					<location> -0.0021 -0.068 -0.048</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="RHMH2">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>hand_r</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0.0025 -0.082 0.034</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="LSJC">
+				<Marker name="LLEC">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>humerus_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0 0 0</location>
+					<location> 0.0304465 -0.265559 -0.0459441</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="LLHE">
+				<Marker name="LMEC">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>humerus_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.025 -0.27 -0.038</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="LMHE">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>humerus_l</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0.001 -0.28 0.045</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="LEJC">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>humerus_l</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0.00584 -0.28069 0.0002</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="LUS">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>radius_l</body>
-					<!--Location of a marker on the body segment.-->
-					<location> -0.015 -0.23 0.018</location>
+					<location> 0.00667818 -0.265807 0.0484612</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -9055,31 +9592,15 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>radius_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.00316 -0.22312 -0.04988</location>
+					<location> -0.0213179 -0.249441 0.0300107</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="LWJC">
+				<Marker name="LLS">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>radius_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.01 -0.23187 -0.017</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="LHMH2">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>hand_l</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0.0025 -0.082 -0.034</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="LHMH5">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>hand_l</body>
-					<!--Location of a marker on the body segment.-->
-					<location> -0.0021 -0.068 0.048</location>
+					<location> -0.00993568 -0.236811 -0.0518686</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -9087,7 +9608,7 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>pelvis</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.02 0.015 0.128</location>
+					<location> -0.00162433 0.00547331 0.127274</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -9095,7 +9616,7 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>pelvis</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.02 0.015 -0.128</location>
+					<location> -0.00540236 0.0209707 -0.126192</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -9103,23 +9624,7 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>pelvis</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.2 0.03 -0.04</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="LHJC">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>pelvis</body>
-					<!--Location of a marker on the body segment.-->
-					<location> -0.0707 -0.0661 0.0835</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="RHJC">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>pelvis</body>
-					<!--Location of a marker on the body segment.-->
-					<location> -0.0707 -0.0661 -0.0835</location>
+					<location> -0.204516 0.0430829 -0.0450519</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -9127,63 +9632,47 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>pelvis</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.2 0.03 0.04</location>
+					<location> -0.204154 0.0472498 0.0388591</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RLFE">
+				<Marker name="RECE">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>femur_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0 -0.39 0.05</location>
+					<location> 0.00934068 -0.38537 0.0713603</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RMFE">
+				<Marker name="RICE">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>femur_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0 -0.39 -0.055</location>
+					<location> -0.0131571 -0.393857 -0.0588852</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RKJC">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>femur_r</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0 -0.404 0</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="RATT">
+				<Marker name="RTTA">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>tibia_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.058 -0.07 0.005</location>
+					<location> 0.0461736 -0.0835776 0.0146573</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RLM">
+				<Marker name="REMAL">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>tibia_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.005 -0.42 0.055</location>
+					<location> -0.0105509 -0.411344 0.0490151</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RSPH">
+				<Marker name="RIMAL">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>tibia_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.006 -0.395 -0.045</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="RAJC">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>tibia_r</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0 -0.4 0</location>
+					<location> 0.00953086 -0.379783 -0.0517905</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -9191,23 +9680,23 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>calcn_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.015 0.02 0</location>
+					<location> -0.0156905 0.0452495 -0.0133885</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RMFH1">
+				<Marker name="RMT1">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>calcn_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.19 0.015 -0.043</location>
+					<location> 0.194459 0.0304472 -0.0308234</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RMFH5">
+				<Marker name="RMT5">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>calcn_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.145 0.01 0.053</location>
+					<location> 0.165793 0.010388 0.0396949</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -9215,7 +9704,7 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>femur_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.042 0 0.1</location>
+					<location> -0.0203183 -0.031753 0.115849</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -9223,63 +9712,47 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>femur_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.042 -0 -0.1</location>
+					<location> -0.0203678 -0.0113357 -0.107955</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="LLFE">
+				<Marker name="LECE">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>femur_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0 -0.39 -0.05</location>
+					<location> 0.00965931 -0.402997 -0.0797588</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="LMFE">
+				<Marker name="LICE">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>femur_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0 -0.39 0.055</location>
+					<location> -0.0164413 -0.402338 0.0621115</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="LKJC">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>femur_l</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0 -0.404 0</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="LATT">
+				<Marker name="LTTA">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>tibia_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.058 -0.07 0.005</location>
+					<location> 0.0564631 -0.0882178 -0.0110562</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="LLM">
+				<Marker name="LEMAL">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>tibia_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.005 -0.42 -0.055</location>
+					<location> -0.0104644 -0.394958 -0.0433533</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="LSPH">
+				<Marker name="LIMAL">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>tibia_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.006 -0.395 0.045</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="LAJC">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>tibia_l</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0 -0.4 0</location>
+					<location> 0.00739414 -0.372281 0.056745</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -9287,47 +9760,31 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>calcn_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> -0.015 0.02 0</location>
+					<location> -0.0123843 0.0596938 0.015725</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="LMFH1">
+				<Marker name="LMT1">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>calcn_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.19 0.015 0.043</location>
+					<location> 0.197001 0.0382799 0.0362445</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="LMFH5">
+				<Marker name="LMT5">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>calcn_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.145 0.01 -0.053</location>
+					<location> 0.162257 0.017498 -0.0393333</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RSJC">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>humerus_r</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0 0 0</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="SEL">
+				<Marker name="FRO">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>head_and_neck</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.12 0.17 0.004</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="OCC">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>head_and_neck</body>
-					<!--Location of a marker on the body segment.-->
-					<location> -0.1 0.14 0</location>
+					<location> 0.132382 0.204044 0.00490951</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -9335,7 +9792,7 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>head_and_neck</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.02 0.15 0.1</location>
+					<location> 0.0888585 0.161528 0.0815907</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -9343,47 +9800,23 @@
 					<!--Body segment in the model on which the marker resides.-->
 					<body>head_and_neck</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.02 0.15 -0.1</location>
+					<location> 0.0857887 0.160486 -0.0826726</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="RTT2">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>toes_r</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0.06 0.012 0.012</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="LTT2">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>toes_l</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0.06 0.012 -0.012</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="RFT3">
+				<Marker name="RFIN">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>fingers_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.03 -0.073 0</location>
+					<location> 0.0339137 -0.0366818 0.00780381</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
-				<Marker name="LFT3">
+				<Marker name="LFIN">
 					<!--Body segment in the model on which the marker resides.-->
 					<body>fingers_l</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.03 -0.073 0</location>
-					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
-					<fixed>false</fixed>
-				</Marker>
-				<Marker name="HV">
-					<!--Body segment in the model on which the marker resides.-->
-					<body>head_and_neck</body>
-					<!--Location of a marker on the body segment.-->
-					<location> 0 0.23 0</location>
+					<location> 0.0262592 -0.0279402 -0.00872306</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
@@ -9395,5 +9828,20 @@
 			<objects />
 			<groups />
 		</ContactGeometrySet>
+		<!--Controllers in the model.-->
+		<ControllerSet name="Controllers">
+			<objects />
+			<groups />
+		</ControllerSet>
+		<!--Additional components in the model.-->
+		<ComponentSet name="MiscComponents">
+			<objects />
+			<groups />
+		</ComponentSet>
+		<!--Probes in the model.-->
+		<ProbeSet>
+			<objects />
+			<groups />
+		</ProbeSet>
 	</Model>
 </OpenSimDocument>
