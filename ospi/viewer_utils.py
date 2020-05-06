@@ -3,7 +3,7 @@ import gepetto.corbaserver
 import numpy as np
 import pinocchio as se3
 import os
-from pinocchio.utils import XYZQUATToViewerConfiguration, zero, se3ToXYZQUAT
+from pinocchio.utils import zero, se3ToXYZQUAT
 from pinocchio.utils import zero as mat_zeros
 from IPython import embed
 ENABLE_VIEWER = "ON"
@@ -96,7 +96,6 @@ class Viewer(object):
         layout. If multiple objects have to be placed at the same time, do the refresh only
         at the end of the list
         '''
-        #pinocchioConf = XYZQUATToViewerConfiguration(se3ToXYZQUAT(M))
         pinocchioConf = se3.utils.se3ToXYZQUAT(M)
         self.viewer.gui.applyConfiguration(objName,pinocchioConf)
         if refresh: self.viewer.gui.refresh()

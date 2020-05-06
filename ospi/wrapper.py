@@ -4,7 +4,7 @@ import pinocchio as se3
 import numpy as np
 import time
 import os
-from pinocchio.utils import XYZQUATToViewerConfiguration, zero, se3ToXYZQUAT
+from pinocchio.utils import zero, se3ToXYZQUAT
 from bmtools.algebra import quaternion_from_matrix, euler_matrix
 from bmtools.filters import *
 
