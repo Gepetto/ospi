@@ -5,7 +5,7 @@ from distutils.core import setup
 setup(
     name='ospi',
     description='This library contains scripts for working with OpenSim files and pinocchio software.',
-    version='1.0.1',
+    version='1.0.3',
     packages=['ospi'],
     keywords='biomechanics OpenSim pinocchio',
     url='https://github.com/gepetto/ospi/',
