@@ -1,6 +1,9 @@
 import math
+
 import numpy as np
-#import scipy
+from numpy.linalg import norm, pinv
+
+# import scipy
 
 # epsilon for testing whether a number is close to zero
 _EPS = np.finfo(float).eps * 4.0
@@ -52,38 +55,38 @@ def nullSpace(A, eps=1e-15):
 def svdDecomposition(A, threshold_value):
     U, s, V = np.linalg.svd(A, full_matrices=False)
     k = (s >= threshold_value).sum()
-    #print s
+    # print s
     s_inv = 1. / s[:k]
-    #print s_inv
+    # print s_inv
     #
-    U1 = np.matrix(U[:, :k])
-    V1 = V[:k, :].T
+    # U1 = np.matrix(U[:, :k])
+    # V1 = V[:k, :].T
     # Compute projector onto the Null Space
     P = (-V[:k, :].T).dot(V[:k, :])
     P.A[np.diag_indices_from(P)] += 1.
     # Compute the pseudo inverse
     A_pinv = V[:k, :].T.dot(np.diag(s_inv).dot(U[:, :k].T))
-    #print k
-    #A_pinv = pinv(A,threshold_value)
-    #P = - A_pinv.dot(A)
-    #if type(P) is np.ndarray:
-    #  P[np.diag_indices_from(P)] += 1.
-    #else:
-    #  P.A[np.diag_indices_from(P)] += 1.
+    # print k
+    # A_pinv = pinv(A,threshold_value)
+    # P = - A_pinv.dot(A)
+    # if type(P) is np.ndarray:
+    #   P[np.diag_indices_from(P)] += 1.
+    # else:
+    #   P.A[np.diag_indices_from(P)] += 1.
     return A_pinv, P, k
 
 
 def svdDecompositionBis(A, M, threshold_value):
-    #U, s, V = np.linalg.svd(A, full_matrices=False)
-    #k = (s >= threshold_value).sum()
-    #s_inv = 1./s[:k]                                                                                               #
-    #U1 = np.matrix(U[:,:k])
-    #V1 = V[:k,:].T
-    ## Compute projector onto the Null Space
-    #P = (-V[:k,:].T).dot(V[:k,:])
-    #P.A[np.diag_indices_from(P)] += 1.
-    ## Compute the pseudo inverse
-    #A_pinv = V[:k,:].T.dot( np.diag(s_inv).dot(U[:,:k].T) )
+    # U, s, V = np.linalg.svd(A, full_matrices=False)
+    # k = (s >= threshold_value).sum()
+    # s_inv = 1./s[:k]                                                                                               #
+    # U1 = np.matrix(U[:,:k])
+    # V1 = V[:k,:].T
+    # # Compute projector onto the Null Space
+    # P = (-V[:k,:].T).dot(V[:k,:])
+    # P.A[np.diag_indices_from(P)] += 1.
+    # # Compute the pseudo inverse
+    # A_pinv = V[:k,:].T.dot( np.diag(s_inv).dot(U[:,:k].T) )
     A_pinv = M.dot(A.T).dot(pinv(A.dot(M).dot(A.T), threshold_value))
     P = -A_pinv.dot(A)
     if type(P) is np.ndarray:
@@ -352,14 +355,14 @@ def quaternion_about_axis(angle, axis):
 
     """
     q = np.array([0.0, axis[0], axis[1], axis[2]])
-    qlen = vector_norm(q)
+    qlen = norm(q)
     if qlen > _EPS:
         q *= math.sin(angle / 2.0) / qlen
     q[0] = math.cos(angle / 2.0)
     return q
 
 
-#Using the Euler-Rodrigues formula
+# Using the Euler-Rodrigues formula
 def rotation_matrix(axis, theta):
     """
     Return the rotation matrix associated with counterclockwise rotation about
@@ -400,8 +403,8 @@ def rpytoQUAT(r, p, y):
         _z = (rotmat[1, 0] - rotmat[0, 1]) * s
         _r = 0.25 / s
     else:
-        #Trace is less than zero, so need to determine which
-        #major diagonal is largest
+        # Trace is less than zero, so need to determine which
+        # major diagonal is largest
         if ((d0 > d1) and (d0 > d2)):
             s = 0.5 / np.sqrt(1 + d0 - d1 - d2)
             _x = 0.5 * s
@@ -450,8 +453,8 @@ def rotation_from_matrix(matrix):
     i = np.where(abs(np.real(w) - 1.0) < 1e-8)[0]
     if not len(i):
         raise ValueError("no unit eigenvector corresponding to eigenvalue 1")
-    #point = np.real(Q[:, i[-1]]).squeeze()
-    #point /= point[3]
+    # point = np.real(Q[:, i[-1]]).squeeze()
+    # point /= point[3]
     # rotation angle depending on direction
     cosa = (np.trace(R33) - 1.0) / 2.0
     if abs(direction[2]) > 1e-8:
@@ -461,4 +464,4 @@ def rotation_from_matrix(matrix):
     else:
         sina = (R[2, 1] + (cosa - 1.0) * direction[1] * direction[2]) / direction[0]
     angle = math.atan2(sina, cosa)
-    return angle, direction  #, point
+    return angle, direction  # , point

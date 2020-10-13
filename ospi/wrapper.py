@@ -1,11 +1,10 @@
-import model_parser as mdp
-import motion_parser as mtp
-import pinocchio as se3
-import numpy as np
 import time
-import os
-from pinocchio.utils import zero, se3ToXYZQUAT
-from bmtools.algebra import quaternion_from_matrix, euler_matrix
+
+import numpy as np
+import pinocchio as se3
+from pinocchio.utils import se3ToXYZQUAT, zero
+
+import model_parser as mdp
 from bmtools.filters import *
 
 
@@ -18,8 +17,8 @@ class Wrapper():
         self.visuals = ms_system.visuals
         self.forces = ms_system.forces
         self.joint_transformations = ms_system.joint_transformations
-        self.v0 = zero(self.model.nv)  #TODO get from model
-        self.q0 = zero(self.model.nq)  #TODO get from model
+        self.v0 = zero(self.model.nv)  # TODO get from model
+        self.q0 = zero(self.model.nq)  # TODO get from model
         self.q = self.q0
         self.dq = zero(self.model.nv)
         self.ddq = zero(self.model.nv)
@@ -35,13 +34,13 @@ class Wrapper():
     def getSubTree(self, idx):
         subtree = []
         idx_p = self.model.parents[idx]
-        #dof = human.model.joints[idx_p].idx_q
-        #subtree.append([idx_p, dof])
+        # dof = human.model.joints[idx_p].idx_q
+        # subtree.append([idx_p, dof])
         subtree.append(idx_p)
         while True:
             idx_p = self.model.parents[idx_p]
-            #dof = human.model.joints[idx_p].idx_q
-            #subtree.append([idx_p, dof])
+            # dof = human.model.joints[idx_p].idx_q
+            # subtree.append([idx_p, dof])
             subtree.append(idx_p)
             if idx_p == 0:
                 break
@@ -49,15 +48,15 @@ class Wrapper():
 
     def update(self, q):
         se3.computeAllTerms(self.model, self.data, self.q, self.v)
-        #se3.forwardKinematics(self.model, self.data, q, self.v, self.a)
-        #- se3::forwardKinematics
-        #- se3::crba
-        #- se3::nonLinearEffects
-        #- se3::computeJacobians
-        #- se3::centerOfMass
-        #- se3::jacobianCenterOfMass
-        #- se3::kineticEnergy
-        #- se3::potentialEnergy
+        # se3.forwardKinematics(self.model, self.data, q, self.v, self.a)
+        # - se3::forwardKinematics
+        # - se3::crba
+        # - se3::nonLinearEffects
+        # - se3::computeJacobians
+        # - se3::centerOfMass
+        # - se3::jacobianCenterOfMass
+        # - se3::kineticEnergy
+        # - se3::potentialEnergy
         se3.framesKinematics(self.model, self.data, q)
         se3.computeJacobians(self.model, self.data, q)
         se3.rnea(self.model, self.data, q, self.v, self.a)
@@ -66,7 +65,7 @@ class Wrapper():
 
     def inverseDynamics(self, q, v, a, f_ext=None):
         '''ID(q, v, a, f_ext)
-         f_ext: Vector of external forces expressed in the local frame of each joint 
+         f_ext: Vector of external forces expressed in the local frame of each joint
          do it recursively
         '''
         if f_ext is None:
@@ -127,7 +126,7 @@ class Wrapper():
         self.Q = Q
         self.V = self.generalizedVelocity(self.Q, self.dt)
         self.A = self.generalizedAcceleration(self.V, self.dt)
-        #se3.forwardKinematics(self.model, self.data, self.Q, self.V, self.A)
+        # se3.forwardKinematics(self.model, self.data, self.Q, self.V, self.A)
 
     def playForwardKinematics(self, Q, sleep=0.0025, step=10, record=False):
         ''' playForwardKinematics(q, sleep, step, record)
@@ -139,7 +138,7 @@ class Wrapper():
             self.display(self.q, osimref=True, com=True, updateKinematics=False)
             time.sleep(sleep)
             if record is True:
-                #rec =  self.record()
+                # rec =  self.record()
                 rec['q'].append(self.q)
                 rec['com'].append(self.com(self.q).getA()[:, 0])
                 rec['Jcom'].append(self.Jcom(se3.jacobianCenterOfMass(self.model, self.data, self.q)))
@@ -149,13 +148,13 @@ class Wrapper():
     def com(self, q, v=None, a=None, update_kinematics=True):
         if v is not None:
             if a is None:
-                se3.centerOfMass(self.model, self.data, q, v)  #, update_kinematics)
+                se3.centerOfMass(self.model, self.data, q, v)  # , update_kinematics)
                 return self.data.com[0], self.data.vcom[0]
-            se3.centerOfMass(self.model, self.data, q, v, a)  #, update_kinematics)
+            se3.centerOfMass(self.model, self.data, q, v, a)  # , update_kinematics)
             return self.data.com[0], self.data.vcom[0], self.data.acom[0]
-        return se3.centerOfMass(self.model, self.data, q)  #, update_kinematics)
+        return se3.centerOfMass(self.model, self.data, q)  # , update_kinematics)
 
-    def Jcom(self, q):  #, update_kinematics=True):
+    def Jcom(self, q):  # , update_kinematics=True):
         return se3.jacobianCenterOfMass(self.model, self.data, q)
 
     def mass(self, q, update_kinematics=True):
@@ -210,18 +209,18 @@ class Wrapper():
         v = f.placement.actInv(self.data.v[f.parent])
         a.linear += np.cross(v.angular.T, v.linear.T).T
         return a
-        ''' Call computeJacobians if update_geometry is true. 
-        If not, user should call computeJacobians first. 
-        Then call getJacobian and return the resulted jacobian matrix. 
-        Attention: if update_geometry is true,the function computes 
-        all the jacobians of the model. It is therefore outrageously 
+        ''' Call computeJacobians if update_geometry is true.
+        If not, user should call computeJacobians first.
+        Then call getJacobian and return the resulted jacobian matrix.
+        Attention: if update_geometry is true,the function computes
+        all the jacobians of the model. It is therefore outrageously
         costly wrt a dedicated call. Use only with update_geometry for prototyping.
     '''
 
     def frameJacobian(self, q, index, update_geometry=True, local_frame=True):
         return se3.frameJacobian(self.model, self.data, q, index, local_frame, update_geometry)
 
-    #test individual joints
+    # test individual joints
     def move(self, name, dof):
         if name == 'pelvis_tilt':
             quat = rpytoQUAT(dof, se3.utils.npToTuple(self.q[1])[0], se3.utils.npToTuple(self.q[2])[0])
@@ -254,7 +253,7 @@ class Wrapper():
             self.q[2] = dof
             self.display(self.q)
 
-    #POSES
+    # POSES
     def zero_poseDisplay(self):
         v = zero(self.model.nv)
         q = zero(self.model.nq)
@@ -264,7 +263,7 @@ class Wrapper():
 
     def half_sitting(self):
         q = self.q0
-        q[2] = 0.92  #0.81
+        q[2] = 0.92  # 0.81
         v = self.v0
         idx = self.model.getJointId('hip_r')
         idx = self.model.joints[idx].idx_q
@@ -286,13 +285,13 @@ class Wrapper():
         q[idx + 3] = Mquat[6]
         idx = self.model.getJointId('knee_r')
         idx = self.model.joints[idx].idx_q
-        q[idx] = -0.4  #1.22
+        q[idx] = -0.4  # 1.22
         idx = self.model.getJointId('knee_l')
         idx = self.model.joints[idx].idx_q
         q[idx] = -0.4
         idx = self.model.getJointId('ankle_r')
         idx = self.model.joints[idx].idx_q
-        q[idx] = 0.25  #0.61
+        q[idx] = 0.25  # 0.61
         idx = self.model.getJointId('ankle_l')
         idx = self.model.joints[idx].idx_q
         q[idx] = 0.25
@@ -357,7 +356,7 @@ class Wrapper():
         q[idx] = 1.
         idx = self.model.getJointId('radioulnar_l')
         idx = self.model.joints[idx].idx_q
-        q[idx] = 1.  #0.22
+        q[idx] = 1.  # 0.22
         idx = self.model.getJointId('radius_lunate_r')
         idx = self.model.joints[idx].idx_q
         q[idx] = -0.02
@@ -393,7 +392,7 @@ class Wrapper():
                     pose = self.data.com[i]
                     CoM = se3.SE3.Identity()
                     CoM.translation = pose
-                    #CoM = self.data.oMi[i]*CoM
+                    # CoM = self.data.oMi[i]*CoM
                     self.display.viewer.gui.addXYZaxis('world/CoM', [0., 0., 1., .8], 0.03, 0.2)
                     self.display.place('world/CoM', CoM, True)
                 else:
@@ -406,7 +405,7 @@ class Wrapper():
                     self.display.place('world/' + visualName + 'CoM', CoM, True)
 
         else:
-            print 'each segment'
+            print('each segment')
 
     def t_poseDisplay(self):
         q = zero(self.model.nq)
@@ -442,9 +441,9 @@ class Wrapper():
         self.display(q, v)
         self.q = q
 
-    #def printSegments(self):
-    #    for i in range(0, len(self.model.names)):
-    #        print(self.model.names[i])
+    # def printSegments(self):
+    #     for i in range(0, len(self.model.names)):
+    #         print(self.model.names[i])
 
     def printJoints(self):
         for i in range(0, len(self.model.names)):
@@ -543,7 +542,7 @@ class Wrapper():
     def rotateFFJ(self, q, axis, angle, idx):
         v = zero(self.model.nv)
         M = se3.SE3.Identity()
-        #M.rotation = self.data.oMi[idx].rotation * rotate(axis, angle)
+        # M.rotation = self.data.oMi[idx].rotation * rotate(axis, angle)
         M.rotation = rotate(axis, angle)
         Mquat = se3ToXYZQUAT(M)
         for dof in range(idx, idx + 7):
@@ -553,7 +552,7 @@ class Wrapper():
     def rotateSPHJ(self, q, axis, angle, idx):
         v = zero(self.model.nv)
         M = se3.SE3.Identity()
-        #M.rotation = self.data.oMi[idx].rotation * rotate(axis, angle)
+        # M.rotation = self.data.oMi[idx].rotation * rotate(axis, angle)
         M.rotation = rotate(axis, angle)
         Mquat = se3ToXYZQUAT(M)
         for dof in range(idx, idx + 4):
@@ -561,9 +560,9 @@ class Wrapper():
         self.play(q, v)
 
     def rotateREVJ(self, q, axis, angle, idx):
-        #M = se3.SE3.Identity()
-        #M.rotation = self.data.oMi[idx].rotation * rotate(axis, angle)
-        #Mquat = se3ToXYZQUAT(M)
+        # M = se3.SE3.Identity()
+        # M.rotation = self.data.oMi[idx].rotation * rotate(axis, angle)
+        # Mquat = se3ToXYZQUAT(M)
         v = zero(self.model.nv)
         q[idx] = angle
         self.play(q, v)

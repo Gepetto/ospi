@@ -4,10 +4,14 @@
        :parse OpenSim into pinocchio models
 .. moduleauthor:: Galo Maldonado <galo_xav@hotmail.com>
 """
+from __future__ import print_function
+
+import os
 import xml.etree.ElementTree as xml
+
 import numpy as np
 import pinocchio as se3
-import os
+
 import model_builder as builder
 import utils
 
@@ -77,7 +81,7 @@ def readOsim(filename):
                 coordinate_data['locked'].append(coordinates.find('locked').text)
                 coordinate_data['prescribed_function'].append(coordinates.find('prescribed_function').text)
 
-            #get spatial transform
+            # get spatial transform
             spatial_list = joint.iter('TransformAxis')
             spatial_data = {'name': [], 'coordinates': [], 'axis': []}
             for spatial_transform in spatial_list:
@@ -179,11 +183,11 @@ def parseModel(filename, mesh_path, verbose=False):
         jointLimits += pymodel['Joints'][joint][1]['range']
 
         if (verbose):
-            print 'ID: ', joint_id
-            print 'Joint Name: ' + joint_name
-            print 'Parent Name: ' + pymodel['Joints'][joint][0]['parent_body'][0], parent
-            print 'Joint Model: ', joint_model
-            print 'Joint Limits: ', pymodel['Joints'][joint][1]['range']
+            print('ID: ', joint_id)
+            print('Joint Name: ' + joint_name)
+            print('Parent Name: ' + pymodel['Joints'][joint][0]['parent_body'][0], parent)
+            print('Joint Model: ', joint_model)
+            print('Joint Limits: ', pymodel['Joints'][joint][1]['range'])
 
         # From OpenSim to Pinocchio
         joint_placement = se3.SE3.Identity()
@@ -212,12 +216,14 @@ def parseModel(filename, mesh_path, verbose=False):
         for mesh in range(0, len(pymodel['Visuals'][body][1]['geometry_file'])):
             visual_name = os.path.splitext(pymodel['Visuals'][body][1]['geometry_file'][mesh])[0]
             filename = mesh_path + '/' + visual_name + '.obj'
-            if (verbose): print 'Filename: ' + filename
+            if (verbose):
+                print('Filename: ' + filename)
             transform = np.matrix(pymodel['Visuals'][body][1]['transform'][mesh], dtype=np.float64).T
             transform[3:6] = osMpi * transform[3:6]
             transform[0:3] = osMpi * transform[0:3]
-            visuals = ms_system.createVisuals(parent, joint_name, filename, scale_factors, transform)
-        if (verbose): print '****'
+            ms_system.createVisuals(parent, joint_name, filename, scale_factors, transform)
+        if (verbose):
+            print('****')
 
     # create data
     ms_system.createData()

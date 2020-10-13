@@ -7,8 +7,8 @@
 
 import numpy as np
 import pinocchio as se3
+
 import algebra as alg
-from IPython import embed
 
 
 def _parse2PinocchioJoints(pymodel):
@@ -26,23 +26,23 @@ def _parse2PinocchioJoints(pymodel):
             joint_transformations.append(np.matrix(np.float64(joints[2]['axis']))[0:3, :])
             joint_models.append([jts, pymodel['Joints'][jts][0]['name'][0], se3.JointModelSpherical()])
         elif dof_in_joint == 2:
-            print '2 dof not supported'
+            print('2 dof not supported')
         elif dof_in_joint == 1:
             for dof in range(0, len(joints[2]['coordinates'])):
-                if joints[2]['coordinates'][dof] != None:
+                if joints[2]['coordinates'][dof] is not None:
                     if joints[2]['name'][dof][0:8] == 'rotation':
                         if joints[2]['axis'][dof] == ['1', '0', '0'] or joints[2]['axis'][dof] == ['-1', '0', '0']:
-                            #Y
+                            # Y
                             joint_models.append([jts, pymodel['Joints'][jts][0]['name'][0], se3.JointModelRY()])
                             joint_transformations.append(np.matrix(np.float64(joints[2]['axis']))[dof])
 
                         elif joints[2]['axis'][dof] == ['0', '1', '0']:
-                            #Z
+                            # Z
                             joint_models.append([jts, pymodel['Joints'][jts][0]['name'][0], se3.JointModelRZ()])
                             joint_transformations.append(np.matrix(np.float64(joints[2]['axis']))[dof])
 
                         elif joints[2]['axis'][dof] == ['0', '0', '1']:
-                            #X
+                            # X
                             joint_models.append([jts, pymodel['Joints'][jts][0]['name'][0], se3.JointModelRX()])
                             joint_transformations.append(np.matrix(np.float64(joints[2]['axis']))[dof])
 
@@ -53,7 +53,7 @@ def _parse2PinocchioJoints(pymodel):
                                 np.float64(joints[2]['axis'][dof][1]),
                                 np.float64(joints[2]['axis'][dof][2])
                             ])
-                            #2,0,1
+                            # 2,0,1
                             joint_models.append([
                                 jts, pymodel['Joints'][jts][0]['name'][0],
                                 se3.JointModelRevoluteUnaligned(v[0, 2], v[0, 0], v[0, 1])
@@ -66,16 +66,16 @@ def pinocchioCoordinates(model, joint_transformations, dof, representation="quat
     jt = joint_transformations
     oMp = se3.utils.rotate('z', np.pi / 2) * se3.utils.rotate('x', np.pi / 2)
     q = np.matrix(np.zeros((model.nq, 1)))
-    qo_idx = 0  #osim index
-    qp_idx = 0  #pinocchio index
+    qo_idx = 0  # osim index
+    qp_idx = 0  # pinocchio index
 
     # for quaternions
     def orderQuat(quat):
         return [quat[1], quat[2], quat[3], quat[0]]
 
-    for i in xrange(1, len(model.joints)):
+    for i in range(1, len(model.joints)):
         if (model.joints[i].shortname() == "JointModelFreeFlyer"):
-            q[qp_idx + 0:qp_idx + 3, 0] = (oMp * dof[qo_idx + 3:qo_idx + 6, 0]).A  #tx,ty,tz
+            q[qp_idx + 0:qp_idx + 3, 0] = (oMp * dof[qo_idx + 3:qo_idx + 6, 0]).A  # tx,ty,tz
             q[qp_idx + 3:qp_idx + 7, 0] = np.matrix(
                 orderQuat(
                     alg.quaternion_from_matrix(
@@ -104,7 +104,7 @@ def pinocchioCoordinates(model, joint_transformations, dof, representation="quat
             qo_idx += 3
             qp_idx += 4
         elif (model.joints[i].shortname() == "JointModelRevoluteUnaligned"):
-            #joint transformations are handled when creating joint model?
+            # joint transformations are handled when creating joint model?
             q[qp_idx, 0] = dof[qo_idx, 0]
             qo_idx += 1
             qp_idx += 1

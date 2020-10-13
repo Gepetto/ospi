@@ -1,7 +1,5 @@
-import numpy as np
-from IPython import embed
-
 import pinocchio as se3
+
 import utils
 
 
@@ -15,7 +13,7 @@ class MS:
         self.forces = []
         self.joint_transformations = []
         self.name = name
-        #self.FrameType = se3.FrameType.OP_FRAME
+        # self.FrameType = se3.FrameType.OP_FRAME
 
     def buildModel(self, parent, joint_model, joint_placement, joint_name, joint_id, body_inertia, body_placement,
                    body_name):
@@ -23,8 +21,8 @@ class MS:
       TODO add with bounds, check model.hpp
       '''
         frame_parent = self.model.getFrameId(joint_name)
-        #print 'frame_parent: ', frame_parent
-        #self.model.addFrame(joint_name, joint_id, frame_parent, joint_placement, se3.FrameType.JOINT)
+        # print 'frame_parent: ', frame_parent
+        # self.model.addFrame(joint_name, joint_id, frame_parent, joint_placement, se3.FrameType.JOINT)
         self.model.addJoint(parent, joint_model, joint_placement, joint_name)
         self.model.addJointFrame(joint_id, frame_parent)
         ''' Append a body to the given joint in the kinematic tree
@@ -33,22 +31,22 @@ class MS:
         self.model.addBodyFrame(body_name, joint_id, body_placement, parent)
         ''' Add a frame to the frame three i.e. operational points
       '''
-        #self.model.addFrame(joint_name, parent, idx_f, body_placement, self.FrameType)
-        #return self.model
+        # self.model.addFrame(joint_name, parent, idx_f, body_placement, self.FrameType)
+        # return self.model
 
     def createVisuals(self, parent, joint_name, filename, scale_factors=None, transform=None):
         self.visuals.append([parent, joint_name, filename, scale_factors, transform])
 
     def createForces(self, force_name, force_type, parent, points):
-        #TODO
+        # TODO
         self.forces.append([force_name, force_type, parent, points])
 
     def createConstraints(self, qRoM):
         self.model.lowerPositionLimit = utils.pinocchioCoordinates(self.model, self.joint_transformations, qRoM[:, 0])
         self.model.upperPositionLimit = utils.pinocchioCoordinates(self.model, self.joint_transformations, qRoM[:, 1])
-        #TODO
-        #self.Model.effortLimit
-        #self.Model.velocityLimit
+        # TODO
+        # self.Model.effortLimit
+        # self.Model.velocityLimit
 
     def createData(self):
         self.data = self.model.createData()
