@@ -7,7 +7,7 @@
 
 import numpy as np
 import pinocchio as se3
-import bmtools.algebra as alg 
+import ospi.algebra as alg 
 from IPython import embed
 
 
