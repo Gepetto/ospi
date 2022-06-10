@@ -2,7 +2,7 @@ import numpy as np
 from IPython import embed
 
 import pinocchio as se3
-import utils
+import ospi.utils as utils
 
 
 class MS:

@@ -16,7 +16,7 @@ filename = 'models/whole_body/wholebodyOLI.osim'
 wb_model = wr.Wrapper(filename, mesh_path, name='whole-body_model10')
 
 # call the gepetto viewer server
-gvs = subprocess.Popen('gepetto-gui')
+gvs = subprocess.Popen('gepetto-gui', shell=True )
 print('Loading the viewer ...')
 time.sleep(2)
 
@@ -27,9 +27,8 @@ viewer.display(wb_model.q0, wb_model.name)
 
 # See axis
 # viewer.JointFrames(wb_model.name)
-
 # parse motion:
-time, q, colheaders, qOsim = mtp.parseMotion(wb_model.model, wb_model.joint_transformations, 'OLI_F_3.mot', 'quat')
+time_tab, q, colheaders, qOsim = mtp.parseMotion(wb_model.model, wb_model.joint_transformations, 'OLI_F_3.mot', 'quat')
 
 t = 0.0
 

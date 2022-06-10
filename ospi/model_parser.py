@@ -8,8 +8,8 @@ import xml.etree.ElementTree as xml
 import numpy as np
 import pinocchio as se3
 import os 
-import model_builder as builder
-import utils
+import ospi.model_builder as builder
+import ospi.utils as utils
 
 def readOsim(filename):
     pymodel = {
@@ -130,7 +130,6 @@ def readOsim(filename):
                 bones_data['scale_factors'].append((bones.find('scale_factors').text).split())
                 bones_data['display_preference'].append(bones.find('display_preference').text)
                 bones_data['opacity'].append(bones.find('opacity').text)
-                
             pymodel['Visuals'].append([visuals_data, bones_data])
 
 
@@ -187,7 +186,8 @@ def readOsim(filename):
 def parseModel(filename, mesh_path, verbose=False):
     pymodel = readOsim(filename)
     ms_system = builder.MS("MS system") # TODO get model name
-    osMpi = se3.utils.rotate('z', np.pi/2) * se3.utils.rotate('x', np.pi/2)
+    osMpi = se3.utils.rotate('z', np.pi/2) @ se3.utils.rotate('x', np.pi/2)
+    #osMpi = se3.SE3.Identity().rotation
 
     joint_models, joint_transformations = utils._parse2PinocchioJoints(pymodel)    
     ms_system.createJointTransformations(joint_transformations)
@@ -209,23 +209,23 @@ def parseModel(filename, mesh_path, verbose=False):
         jointLimits += pymodel['Joints'][joint][1]['range']
         
         if (verbose):
-            print 'ID: ',joint_id
-            print 'Joint Name: '+joint_name
-            print 'Parent Name: '+pymodel['Joints'][joint][0]['parent_body'][0], parent
-            print 'Joint Model: ',joint_model
-            print 'Joint Limits: ',pymodel['Joints'][joint][1]['range']
+            print ('ID: ',joint_id)
+            print ('Joint Name: '+joint_name)
+            print ('Parent Name: '+pymodel['Joints'][joint][0]['parent_body'][0], parent)
+            print ('Joint Model: ',joint_model)
+            print ('Joint Limits: ',pymodel['Joints'][joint][1]['range'])
             
         # From OpenSim to Pinocchio
         joint_placement = se3.SE3.Identity()
         r = np.matrix(pymodel['Joints'][joint][0]['orientation_in_parent'][0],dtype = np.float64).T
         # TODO change orientation of joint ***
-        joint_placement.rotation = se3.utils.rpyToMatrix(osMpi * r)
+        joint_placement.rotation = se3.utils.rpyToMatrix(osMpi @ r)
             
         t = pymodel['Joints'][joint][0]['location_in_parent'][0]            
-        joint_placement.translation = osMpi *  np.matrix(t,dtype=np.float64).T
+        joint_placement.translation = osMpi @  np.matrix(t,dtype=np.float64).T
             
         mass = np.float64(pymodel['Bodies'][body]['mass'][0])
-        mass_center = osMpi * np.matrix(pymodel['Bodies'][body]['mass_center'][0], dtype = np.float64).T
+        mass_center = osMpi @ np.matrix(pymodel['Bodies'][body]['mass_center'][0], dtype = np.float64).T
         inertia_matrix = np.matrix(pymodel['Bodies'][body]['inertia'][0], dtype = np.float64)
         body_inertia = (se3.Inertia( mass, mass_center, inertia_matrix))
         body_placement = se3.SE3.Identity()
@@ -241,7 +241,7 @@ def parseModel(filename, mesh_path, verbose=False):
             body_name
         )
     
-        scale_factors = osMpi * (np.matrix(pymodel['Visuals'][body][0]['scale_factors'][0], np.float64)).T
+        scale_factors = osMpi @ (np.matrix(pymodel['Visuals'][body][0]['scale_factors'][0], np.float64)).T
         scale_factors = np.asarray(scale_factors.T)[0]
         scale_factors = [scale_factors[0], scale_factors[1], scale_factors[2]]
 
@@ -249,12 +249,12 @@ def parseModel(filename, mesh_path, verbose=False):
         for mesh in range(0, len(pymodel['Visuals'][body][1]['geometry_file']) ):
             visual_name = os.path.splitext(pymodel['Visuals'][body][1]['geometry_file'][mesh])[0]
             filename = mesh_path+'/'+visual_name+'.obj'
-            if (verbose): print 'Filename: '+filename
+            if (verbose): print ('Filename: '+filename)
             transform = np.matrix(pymodel['Visuals'][body][1]['transform'][mesh],dtype=np.float64).T
-            transform[3:6] =  osMpi * transform[3:6]
-            transform[0:3] =  osMpi * transform[0:3]
+            transform[3:6] =  osMpi @ transform[3:6]
+            transform[0:3] =  osMpi @ transform[0:3]
             visuals = ms_system.createVisuals(parent, joint_name, filename, scale_factors, transform)
-        if (verbose): print '****'
+        if (verbose): print ('****')
     
     # create data
     ms_system.createData()
@@ -270,7 +270,7 @@ def parseModel(filename, mesh_path, verbose=False):
         for point in range(0,len(pymodel['Forces'][force][1])):
             parent = pymodel['Forces'][force][1][point]['body'][0]
             point_name = pymodel['Forces'][force][1][point]['point_name'][0]
-            location = osMpi * np.matrix([pymodel['Forces'][force][1][point]['location'][0]],dtype=np.float64).T
+            location = osMpi @ np.matrix([pymodel['Forces'][force][1][point]['location'][0]],dtype=np.float64).T
             points.append([point_name,parent,location])
         ms_system.createForces(force_name,force_type,parent,points)
     
